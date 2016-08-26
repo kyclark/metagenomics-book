@@ -3,21 +3,28 @@
 sub MAIN (Str :$in-dir! where *.IO.d, Str :$out-dir!, Int :$max=50000) {
     mkdir $out-dir unless $out-dir.IO.d;
 
-    for dir($in-dir) -> $file {
+    for dir($in-dir).grep(*.IO.f) -> $file {
         my &next-fh = sub {
             state $file-num = 1;
-            my $ext      = '.' ~ $file.extension;
-            my $basename = $file.basename.subst(/$ext $/, '');
+            my $match    = $file ~~ /(\.\w+)[\.gz]?/;
+            my $rm-ext   = $match.Str;
+            my $ext      = $match.caps[0].value;
+            my $basename = $file.basename.subst(/$rm-ext $/, '');
+
             open $*SPEC.catfile(
                 $out-dir, 
                 sprintf('%s-%03d%s', $basename, $file-num++, $ext)
             ), :w;
         };
 
-        my $out-fh = next-fh();
         my @buffer;
-        my $i = 0;
-        for $file.IO.lines -> $line {
+        my $out-fh = next-fh();
+        my $i      = 0;
+        my $fh     = $file ~~ /\.gz$/
+                     ?? run(«gunzip -c $file |», :out).out
+                     !! open $file;
+
+        for $fh.lines -> $line {
             # start of a multi-line record is a ">"
             $i++ if $line ~~ /^'>'/;
 
@@ -53,10 +60,15 @@ For sample FASTA input:
 
   $ wget ftp://ftp.imicrobe.us/projects/33/samples/713/HUMANGUT_SMPL_F1S.fa.gz
 
+Will process all regular files in "--in-dir."  Handles gzip compressed files
+via "gunzip -c."
+
 =head1 SEE ALSO
 
 =item https://en.wikipedia.org/wiki/FASTA_format
+
 =item https://github.com/MattOates/BioInfo
+
 =item BioPerl6
 
 =head1 AUTHOR
