@@ -1,11 +1,9 @@
-FASTA_DIR = "/rsgrps/bhurwitz/kyclark/human-gut/fasta"
-OUT_DIR = "/rsgrps/bhurwitz/kyclark/human-gut"
-BLAST_DB = "/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_bacteria/1313.2945.fna"
+FASTA_DIR = "/rsgrps/bhurwitz/kyclark/blast-test/fasta"
+OUT_DIR = "/rsgrps/bhurwitz/kyclark/blast-test"
+BLAST_DB = "/rsgrps/bhurwitz/hurwitzlab/data/blast/gos/gos"
 
 run: clean
 	./00-controller.sh -b $(BLAST_DB) -f $(FASTA_DIR) -o $(OUT_DIR) 
-
-#	./00-controller.sh -b $(BLAST_DB) -f $(FASTA_DIR) -o $(OUT_DIR) -r 02-blast.sh
 
 clean:
 	find . \( -name \*.conf -o -name \*.OU \) -exec rm {} \;
