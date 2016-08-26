@@ -4,12 +4,12 @@ sub MAIN (Str :$in-dir! where *.IO.d, Str :$out-dir!, Int :$max=50000) {
     mkdir $out-dir unless $out-dir.IO.d;
 
     for dir($in-dir).grep(*.IO.f) -> $file {
-        my &next-fh = sub {
+        my $match    = $file ~~ /(\.\w+)[\.gz]?/;
+        my $rm-ext   = $match.Str;           # the whole match
+        my $ext      = $match.caps[0].value; # just the capture
+        my $basename = $file.basename.subst(/$rm-ext $/, '');
+        my &next-fh  = sub {
             state $file-num = 1;
-            my $match    = $file ~~ /(\.\w+)[\.gz]?/;
-            my $rm-ext   = $match.Str;
-            my $ext      = $match.caps[0].value;
-            my $basename = $file.basename.subst(/$rm-ext $/, '');
 
             open $*SPEC.catfile(
                 $out-dir, 
