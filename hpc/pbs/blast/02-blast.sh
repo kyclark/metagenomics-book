@@ -46,7 +46,7 @@ while read FILE; do
 
   OUT_FILE="$BLAST_OUT/$BASENAME"
 
-  blastn -query "$FILE" -out "$OUT_FILE" -outfmt 8 -db $BLAST_DB
+  blastn -query "$FILE" -out "$OUT_FILE" -outfmt 6 -db $BLAST_DB
 done < $TMP_FILES
 
 rm $TMP_FILES
