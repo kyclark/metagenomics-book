@@ -1,0 +1,7 @@
+cat
+dog
+mouse
+bird
+cat
+cat
+dog

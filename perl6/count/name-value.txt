@@ -1,0 +1,8 @@
+mouse	1
+cat	3
+bird	1
+dog	10
+frog	5
+cat	2
+mouse	3
+frog	1

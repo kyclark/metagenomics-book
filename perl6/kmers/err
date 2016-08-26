@@ -1,0 +1,5 @@
+k (-3) must be positive)
+
+  in sub MAIN at ./kmer1.pl6 line 4
+  in block <unit> at ./kmer1.pl6 line 3
+
