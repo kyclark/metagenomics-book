@@ -1,5 +1,30 @@
 #!/usr/bin/env perl6
 
+=begin pod
+
+=head1 NAME
+
+fasta-split.pl6
+
+=head1 DESCRIPTION
+
+Splits a FASTA file into smaller files each of a "--max" number of 
+records.  Useful for breaking large files up for BLAST, etc.
+
+For usage, run with "-h/--help" or no arguments.
+
+=head1 SEE ALSO
+
+=item https://en.wikipedia.org/wiki/FASTA_format
+=item https://github.com/MattOates/BioInfo
+=item BioPerl6
+
+=head1 AUTHOR
+
+Ken Youens-Clark <kyclark@gmail.com>
+
+=end pod
+
 sub MAIN (Str :$in-dir! where *.IO.d, Str :$out-dir!, Int :$max=50000) {
     mkdir $out-dir unless $out-dir.IO.d;
 
@@ -15,6 +40,7 @@ sub MAIN (Str :$in-dir! where *.IO.d, Str :$out-dir!, Int :$max=50000) {
         my @buffer;
         my $i = 0;
         for $file.IO.lines -> $line {
+            # start of a multi-line record is a ">"
             $i++ if $line ~~ /^'>'/;
 
             if $i == $max {
