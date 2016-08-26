@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l jobtype=htc_only
+#PBS -l jobtype=cluster_only
 #PBS -l select=1:ncpus=1:mem=1gb
 #PBS -l place=pack:shared
 #PBS -l walltime=24:00:00
