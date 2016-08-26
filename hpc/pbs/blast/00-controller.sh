@@ -2,6 +2,11 @@
 
 set -u
 
+if [[ $(hostname) != 'service0' ]]; then
+  echo "Please ssh to service0 to submit this 'cluster_only' job."
+  exit 1
+fi
+
 FASTA_DIR=""
 OUT_DIR=""
 QUEUE="standard" 
