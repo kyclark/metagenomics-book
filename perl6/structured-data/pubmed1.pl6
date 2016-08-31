@@ -10,12 +10,13 @@ constant $PUBMED_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 sub MAIN (Int $pubmed-id=27208118) {
     my ($tmpfile, $tmpfh) = tempfile();
     $tmpfh.close;
-    run(«curl -s -o $tmpfile "$PUBMED_URL$pubmed-id"»);
+    run(«wget --quiet -O $tmpfile "$PUBMED_URL$pubmed-id"»);
     my $json = $tmpfile.IO.slurp;
     my $data = from-json($json);
     $tmpfile.IO.unlink;
 
-    if my %pubmed = $data{'result'}{$pubmed-id} {
+    if $data{'result'}{$pubmed-id}.defined {
+        my %pubmed = $data{'result'}{$pubmed-id};
         put "$pubmed-id = %pubmed{'title'} (%pubmed{'lastauthor'})";
     }
     else {

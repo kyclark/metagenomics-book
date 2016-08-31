@@ -12,7 +12,8 @@ sub MAIN (Int $pubmed-id=27208118) {
     my $json = $lwp.get("$PUBMED_URL$pubmed-id");
     my $data = from-json($json);
 
-    if my %pubmed = $data{'result'}{$pubmed-id} {
+    if $data{'result'}{$pubmed-id}.defined {
+        my %pubmed = $data{'result'}{$pubmed-id};
         put "$pubmed-id = %pubmed{'title'} (%pubmed{'lastauthor'})";
     }
     else {

@@ -29,15 +29,15 @@ sub MAIN (Str $gff! where *.IO.f) {
     for %loc.keys -> $chr {
         my @forward-genes = %loc{ $chr }{'+'}.list;
         my @reverse-genes = %loc{ $chr }{'-'}.list;
-        printf "chr (%s) has %s forward genes, %s reverse genes\n",
+        note sprintf "chr (%s) has %s forward genes, %s reverse genes\n",
             $chr, @forward-genes.elems, @reverse-genes.elems;
 
         for @forward-genes -> ($gene1, $pos1) {
             for @reverse-genes -> ($gene2, $pos2) {
                 if so $pos1 (&) $pos2 {
                     printf "%s [%s] (%s) => %s [%s] (%s)\n", 
-                     $gene1, '+', $pos1[0,*-1].join('..'),
-                     $gene2, '-', $pos2[0,*-1].join('..');
+                        $gene1, '+', $pos1[0,*-1].join('..'),
+                        $gene2, '-', $pos2[0,*-1].join('..');
                 }
             }
         }

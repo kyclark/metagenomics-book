@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
-subset SortBy of Str where /:i ^keys?|values?$/;
+subset SortBy of Str where  /:i ^ [key|value]s? $ /;
 sub MAIN (Str $file! where *.IO.f, SortBy :$sort-by='key', Bool :$desc=False) {
     my %counts;
     for $file.IO.lines.map(*.split(/\s+/)) -> [$key, $value] {
