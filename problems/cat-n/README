@@ -1,0 +1,36 @@
+# Assignment
+
+Write a bash script that mimics "cat -n" where you print the line number 
+before each line of input from a given file.  
+
+# Testing
+
+When the script is not working, "make test" will show something like this:
+
+```
+$ make test
+./test.pl6
+not ok 1 - Prints usage
+
+# Failed test 'Prints usage'
+# at ./test.pl6 line 9
+not ok 2 - Correct output
+
+# Failed test 'Correct output'
+# at ./test.pl6 line 13
+# expected: '1 foo
+# 2 bar
+# '
+#      got: 'OK
+# '
+make: *** [test] Error 2
+```
+
+Your program is correct when you see this output:
+
+```
+$ make test
+./test.pl6
+ok 1 - Prints usage
+ok 2 - Correct output
+```
