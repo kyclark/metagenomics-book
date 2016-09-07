@@ -30,7 +30,7 @@ is $out1, $expected;
 # --------------------------------------------------
 
 my $out2 = runner-out './parser2.pl6', '--limit=1', 'causes.csv';
-is $out2, '[{Cause of Death => HUMAN IMMUNODEFICIENCY VIRUS DISEASE, Count => 297, Ethnicity => NON-HISPANIC BLACK, Percent => 5, Sex => MALE, Year => 2010} {Cause of Death => INFLUENZA AND PNEUMONIA, Count => 201, Ethnicity => NON-HISPANIC BLACK, Percent => 3, Sex => MALE, Year => 2010}]';
+is_deeply $out2, '[{Cause of Death => HUMAN IMMUNODEFICIENCY VIRUS DISEASE, Count => 297, Ethnicity => NON-HISPANIC BLACK, Percent => 5, Sex => MALE, Year => 2010} {Cause of Death => INFLUENZA AND PNEUMONIA, Count => 201, Ethnicity => NON-HISPANIC BLACK, Percent => 3, Sex => MALE, Year => 2010}]';
 
 # --------------------------------------------------
 
