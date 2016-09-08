@@ -9,6 +9,15 @@ $ ./cat-n.sh input.txt
 2 bar
 ```
 
+If no arguments (files) are given, it should print a "usage" statement:
+
+```
+$ ./cat-n.sh
+Usage: cat-n.sh file
+```
+
+You only need to worry about processing one file.
+
 # Testing
 
 When the script is not working, "make test" will show something like this:
