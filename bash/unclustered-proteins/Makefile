@@ -1,5 +1,8 @@
 all: clean info
 
+run:
+	./find-unclustered.pl6 --cluster-file=cdhit60.3+.clstr --proteins-file=proteins.fa
+
 clean:
 	find . \( -name unclustered-proteins.fa -o -name clean-proteins.fa -o -name \*.o \) -exec rm {} \;
 
