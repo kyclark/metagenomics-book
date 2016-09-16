@@ -6,37 +6,37 @@ clean:
 	find . \( -name \*gene\* -o -name chr-\* \) -exec rm {} \;
 
 fasta:
-	echo OK
+	echo "Download files into \"fasta\" directory"
 
 genome: fasta
-	echo OK
+	echo OK > fasta/genome.fa
 
 chr-count: genome
-	echo OK
+	echo OK > chr-count
 
 chr-size: genome
-	echo OK
+	echo OK > chr-size
 
 features:
-	echo OK
+	echo "Download SGD_features.tab"
 
 gene-count: features
-	echo OK
+	echo OK > gene-count
 
 verified-genes: features
-	echo OK
+	echo OK > verified-genes
 
 uncharacterized-genes: features
-	echo OK
+	echo OK > uncharacterized-genes
 
 gene-types: features
-	echo OK
+	echo OK > gene-types
 
 palinsreg:
-	echo OK
+	echo "Download palinsreg"
 
 terminated-genes: palinsreg
-	echo OK
+	echo OK > terminated-genes
 
 test:
 	./test.pl6
