@@ -1,0 +1,22 @@
+C_HW3 
+
+Edit the existing 'greeting.pl6' file to take a single, positional (not named)
+argument called 'name.'  If you type 'make,' it will execute the script with
+$USER like so:
+
+```
+$ make
+./greeting.pl6 kyclark
+Hello, kyclark, your name has 7 characters.
+$ ./greeting.pl6 "John Coltrane"
+Hello, John Coltrane, your name has 13 characters.
+```
+
+The argument you are getting from the command line is a string, so you 
+will want to read the docs on the "Str" type:
+
+https://docs.perl6.org/type/Str
+
+If your program is given no arguments, it should print a "usage" statement.
+If you use the "MAIN" subroutine with a proper signature, this will happen
+automatically; otherwise, you will need to handle this yourself.
