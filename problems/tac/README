@@ -1,0 +1,84 @@
+# tac.pl6
+
+Create a script that is the reverse of 'cat' in that it will print the lines
+from a given input file in reverse order:
+
+```
+$ cat input.txt
+foo
+bar
+baz
+quux
+$ ./tac.pl6 input.txt
+quux
+baz
+bar
+foo
+```
+
+The script should accept a single unnamed "input" argument that should be a 
+file.  If provided no arguments or an argument that is not an existing file, 
+the script should produce a "usage" statement:
+
+```
+$ ./tac.pl6
+Usage:
+  ./tac.pl6 <input>
+$ ./tac.pl6 this-does-not-exist
+Usage:
+  ./tac.pl6 <input>
+```
+
+If given an input that does not exist, it should print a usage statement.
+
+A passing test suite should look like this:
+
+```
+$ make test
+./test.pl6
+1..3
+ok 1 - No args gives usage
+ok 2 - Bad arg gives usage
+ok 3 - Correct output
+```
+
+If you "make jabber," you should see this:
+
+```
+  And the mome raths outgrabe.
+All mimsy were the borogoves,
+  Did gyre and gimble in the wabe;
+'Twas brillig, and the slithy toves
+
+  He chortled in his joy.
+O frabjous day! Callooh! Callay!'
+  Come to my arms, my beamish boy!
+"And, has thou slain the Jabberwock?
+
+  He went galumphing back.
+He left it dead, and with its head
+  The vorpal blade went snicker-snack!
+One, two! One, two! And through and through
+
+  And burbled as it came!
+Came whiffling through the tulgey wood,
+  The Jabberwock, with eyes of flame,
+And, as in uffish thought he stood,
+
+  And stood awhile in thought.
+So rested he by the Tumtum tree,
+  Long time the manxome foe he sought --
+He took his vorpal sword in hand:
+
+  The frumious Bandersnatch!"
+Beware the Jubjub bird, and shun
+  The jaws that bite, the claws that catch!
+"Beware the Jabberwock, my son!
+
+  And the mome raths outgrabe.
+All mimsy were the borogoves,
+  Did gyre and gimble in the wabe:
+'Twas brillig, and the slithy toves
+
+JABBERWOCKY -- Lewis Carroll
+```
