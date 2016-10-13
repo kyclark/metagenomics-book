@@ -17,19 +17,25 @@ foo
 ```
 
 The script should accept a single unnamed "input" argument that should be a 
-file.  If provided no arguments or an argument that is not an existing file, 
-the script should produce a "usage" statement:
+file.  If provided no arguments, the script should produce a "usage" 
+statement:
 
 ```
 $ ./tac.pl6
 Usage:
   ./tac.pl6 <input>
-$ ./tac.pl6 this-does-not-exist
-Usage:
-  ./tac.pl6 <input>
 ```
 
-If given an input that does not exist, it should print a usage statement.
+If provided an argument that is not a file, it should die with the message
+"Not a file":
+
+```
+$ ./tac.pl6 foo
+
+Not a file (foo)
+  in sub MAIN at ./tac.pl6 line 4
+  in block <unit> at ./tac.pl6 line 3
+```
 
 A passing test suite should look like this:
 
