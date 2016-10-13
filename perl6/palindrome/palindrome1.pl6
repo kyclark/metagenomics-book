@@ -7,7 +7,7 @@ sub MAIN (Str $file='/usr/share/dict/words') {
         my $lc  = $word.lc;
         my $rev = $lc.comb.reverse.join;
 
-        if $lc == $rev {
+        if $lc eq $rev {
             put $word;
         }
     }

@@ -5,7 +5,7 @@ sub MAIN (Str $file='/usr/share/dict/words') {
 
     for $file.IO.lines -> $word {
         next if $word.chars == 1;
-        if $word.lc eq $word.lc.comb.reverse.join {
+        if $word.lc eq $word.lc.flip {
             put $word;
         }
     }
