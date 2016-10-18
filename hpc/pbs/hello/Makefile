@@ -2,4 +2,4 @@ submit: clean
 	qsub hello.sh
 
 clean:
-	rm hello.sh.[eo]*
+	find . -name hello.sh.[eo]* -exec rm {} \;

@@ -1,6 +1,5 @@
 #!/usr/bin/env perl6
 
-use v6;
 use Bio::SeqIO;
 
 sub MAIN (Str $file!) {
@@ -8,7 +7,17 @@ sub MAIN (Str $file!) {
 
     my $seqIO = Bio::SeqIO.new(format => 'fasta', file => $file);
 
+    my @bases = <A C G T>;
+    my %count; 
     while (my $seq = $seqIO.next-Seq) {
-        say $seq.seq;
+        my $b = $seq.seq.uc.comb.Bag;
+
+        for @bases -> $base {
+            %count{ $base } += $b{ $base }
+        }
+    }
+
+    for @bases -> $base {
+        printf "%10d %s\n", %count{ $base }, $base;
     }
 }
