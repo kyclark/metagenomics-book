@@ -1,0 +1,44 @@
+# GC
+
+Write a Perl script that will parse a FASTA file.  For each read, print the
+GC content and whether it is "anthrax" or "burkholderia" based on the whether
+the percent GC falls above or below a given threshold (default = 30%).  
+
+# Sample output
+
+```
+$ ./gc.pl6 burk.fa
+0.52: burkholderia
+0.51: burkholderia
+0.50: burkholderia
+0.47: burkholderia
+0.51: burkholderia
+0.46: burkholderia
+0.50: burkholderia
+0.44: burkholderia
+0.49: burkholderia
+
+$ ./gc.pl6 --threshold=.5 burk.fa
+0.52: burkholderia
+0.51: burkholderia
+0.50: anthrax
+0.47: anthrax
+0.51: burkholderia
+0.46: anthrax
+0.50: anthrax
+0.44: anthrax
+0.49: anthrax
+```
+
+# Test
+
+A passing test suite should look like this:
+
+```
+$ make test
+./test.pl6
+1..3
+ok 1 - Bad arg gives usage
+ok 2 - Burkholderia
+ok 3 - Anthrax
+```
