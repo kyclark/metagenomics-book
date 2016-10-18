@@ -1,11 +1,11 @@
 #!/usr/bin/env perl6
 
-sub MAIN (Str $file='/usr/share/dict/words') {
+sub MAIN (Str $file='/usr/share/dict/words', :$min=2) {
     die "$file not a file" unless $file.IO.f;
 
     my $i = 0;
-    for $file.IO.lines.grep(*.chars>1).map(*.lc) -> $word {
-        if $word eq $word.comb.reverse.join {
+    for $file.IO.lines.grep(*.chars >= $min).map(*.lc) -> $word {
+        if $word eq $word.flip {
             printf "%3d: %s\n", ++$i, $word;
         }
     }
