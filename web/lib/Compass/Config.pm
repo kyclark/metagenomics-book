@@ -16,7 +16,8 @@ subtype 'ExistingFile'
 
 has default_filename => (
     is      => 'ro',
-    default => '/usr/local/compass/lib/conf/compass.yaml',
+    #default => '/usr/local/compass/lib/conf/compass.yaml',
+    default => '/home/u20/kyclark/work/metagenomics-book/web/lib/conf/compass.yaml'
 );
 
 has config     => (
