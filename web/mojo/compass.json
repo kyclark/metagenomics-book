@@ -1,0 +1,19 @@
+{
+    "hypnotoad": {
+        "listen": [
+            "http://*:3005"
+        ],
+        "workers": "10"
+    },
+    "site_name": "Compass",
+    "captcha": {
+        "public_key": "foo",
+        "private_key": "bar"
+    },
+    "db": {
+        "name": "compass",
+        "user": "compass",
+        "password": "u8LAFpZvO8Ua!",
+        "driver": "mysql"
+    }
+}

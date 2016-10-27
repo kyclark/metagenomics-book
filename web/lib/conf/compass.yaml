@@ -1,0 +1,5 @@
+db:
+  name: "compass"
+  user: "compass"
+  password: "u8LAFpZvO8Ua!"
+  driver: "mysql"

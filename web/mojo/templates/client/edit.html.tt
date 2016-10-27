@@ -1,0 +1,104 @@
+<h1>Client &quot;[% client.first_name %] [% client.last_name %]&quot;</h1>
+<div class="pull-right">
+  <a class="btn btn-default" href="/client/view/[% client.id %]">View</a>
+</div>
+
+<form method="post" action="/client/update">
+<table class="table">
+  <tr>
+    <th>Case Num</th>
+    <td><input name="case_num" value="[% client.case_num %]"</td>
+  </tr>
+  <tr>
+    <th align="right">First Name:</th>
+    <td><input name="first_name" value="[% client.first_name %]"></td>
+  </tr>
+  <tr>
+    <th align="right">Last Name:</th>
+    <td><input name="last_name" value="[% client.last_name %]"></td>
+  </tr>
+  <tr>
+    <th>AKA</th>
+    <td><input name="aka" value="[% client.aka %]"></td>
+  </tr>
+  <tr>
+    <th>DOB</th>
+    <td><input name="dob" value="[% client.dob %]"></td>
+  </tr>
+  <tr>
+    <th>Sex</th>
+    <td><input name="sex" value="[% client.sex %]"></td>
+  </tr>
+  <tr>
+    <th>Ethnicity</th>
+    <td><input name="ethnicity" value="[% client.ethnicity %]"></td>
+  </tr>
+  <tr>
+    <th>Race</th>
+    <td><input name="race" value="[% client.race %]"></td>
+  </tr>
+  <tr>
+    <th>Is Homeless</th>
+    <td>
+      <select name="is_homeless">
+        <option value="Y"[% IF client.is_homeless == 'Y'; ' selected'; END %]>Yes</option>
+        <option value="N"[% IF client.is_homeless == 'N'; ' selected'; END %]>No</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th>Is Disabled</th>
+    <td>
+      <select name="is_disabled">
+        <option value="Y"[% IF client.is_disabled == 'Y'; ' selected'; END %]>Yes</option>
+        <option value="N"[% IF client.is_disabled == 'N'; ' selected'; END %]>No</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th>Is Employed</th>
+    <td>
+      <select name="is_employed">
+        <option value="Y"[% IF client.is_employed == 'Y'; ' selected'; END %]>Yes</option>
+        <option value="N"[% IF client.is_employed == 'N'; ' selected'; END %]>No</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th>Marital Status</th>
+    <td><input name="marital_status" value="[% client.marital_status %]"></td>
+  </tr>
+  <tr>
+    <th>Street</th>
+    <td><input name="address_street" value="[% client.address_street %]"></td>
+  </tr>
+  <tr>
+    <th>City</th>
+    <td><input name="address_city" value="[% client.address_city %]"></td>
+  </tr>
+  <tr>
+    <th>State</th>
+    <td><input name="address_state" value="[% client.address_state %]"></td>
+  </tr>
+  <tr>
+    <th>Zip</th>
+    <td><input name="address_zip" value="[% client.address_zip %]"></td>
+  </tr>
+  <tr>
+    <th>email</th>
+    <td><input name="email" value="[% client.email %]"></td>
+  </tr>
+  <tr>
+    <th>Notes</th>
+    <td>
+      <textarea name="notes" cols="50" rows="10">[% client.notes %]</textarea>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="2" class="text-center">
+      <input type="hidden" name="client_id" value="[% client.id %]">
+      <input class="btn btn-primary" type="submit" value="Update User">
+    </th>
+  </tr>
+</table>
+</form>

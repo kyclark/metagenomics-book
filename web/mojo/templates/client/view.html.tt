@@ -1,0 +1,150 @@
+<script>
+$(document).ready(function() {
+  $('#dependents-tbl').dataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    "iDisplayLength": 10
+  });
+});
+</script>
+
+<div class="row">
+  <h1 id="nav-tabs">Client: [% client.first_name %] [% client.last_name %]</h1>
+  <div class="pull-right">
+    <a class="btn btn-default" href="/client/edit/[% client.id %]">Edit</a>
+  </div>
+  <div class="bs-component">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+      <li><a href="#contact" data-toggle="tab">Contact</a></li>
+      <li><a href="#stats" data-toggle="tab">Stats</a></li>
+      <li><a href="#dependents" data-toggle="tab">Dependents ([% client.dependents_rs.count OR '0' %])</a></li>
+      <li><a href="#notes" data-toggle="tab">Notes</a></li>
+    </ul>
+  
+    <div id="tabContent" class="tab-content">
+      <div class="tab-pane fade active in" id="info">
+        <br/>
+        <table class="table">
+          <tr>
+            <th>Case Worker</th>
+            <td>
+              [% IF client.case_worker_id > 0 %]<a href="/case_worker/view/[% client.case_worker.id %]">[% client.case_worker.name %]</a>[% ELSE %]NA[% END %]
+            </td>
+          </tr>
+          <tr>
+            <th>Case Num</th>
+            <td>[% client.case_num OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>First Name</th>
+            <td>[% client.first_name OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Last Name</th>
+            <td>[% client.last_name OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>AKA</th>
+            <td>[% client.aka OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>DOB</th>
+            <td>[% client.dob OR 'NA' %]</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tab-pane fade" id="contact">
+        <br/>
+        <table class="table">
+          <tr>
+            <th>Address</th>
+            <td>
+              [% client.address_street %] 
+              [% client.address_city %] 
+              [% client.address_state %]
+              [% client.address_zip %]
+            </td>
+          </tr>
+          <tr>
+            <th>email</th>
+            <td>[% IF client.email %]<a href="mailto:[% client.email %]">[% client.email %]</a>[% ELSE %]NA[% END %]</td>
+          </tr>
+          [% FOREACH phone IN client.client_phones %]
+            <tr>
+              <th>Phone[% IF phone.type %]([% phone.type %])[% END %]</th>
+              <td>[% phone.phone %]</td>
+            </tr>
+          [% END %]
+        </table>
+      </div>
+
+      <div class="tab-pane fade" id="stats">
+        <br/>
+        <table class="table">
+          <tr>
+            <th>Is Homeless</th>
+            <td>[% client.is_homeless OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Is Disabled</th>
+            <td>[% client.is_disabled OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Is Employed</th>
+            <td>[% client.is_employed OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Marital Status</th>
+            <td>[% client.marital_status OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Sex</th>
+            <td>[% client.sex OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Ethnicity</th>
+            <td>[% client.ethnicity OR 'NA' %]</td>
+          </tr>
+          <tr>
+            <th>Race</th>
+            <td>[% client.race OR 'NA' %]</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="tab-pane fade" id="notes">
+        <br/>
+        [% client.notes %]
+      </div>
+
+      <div class="tab-pane fade" id="dependents">
+        <br/>
+        [% IF client.dependents_rs.count > 0 %]
+          <table class="table" id="dependents-tbl">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Sex</th>
+                <th>DOB</th>
+              </tr>
+            </thead>
+            <tbody>
+            [% FOREACH dep IN client.dependents %]
+              <tr>
+                <td><a href="/dependent/view/[% dep.id %]">[% dep.first_name %]</a></td>
+                <td><a href="/dependent/view/[% dep.id %]">[% dep.last_name %]</a></td>
+                <td>[% dep.sex %]</td>
+                <td>[% dep.dob %]</td>
+              </tr>
+            [% END %]
+            </tbody>
+          </table>
+        [% ELSE %]
+          NA
+        [% END %]
+      </div>
+    </div>
+  </div>
+</div>
