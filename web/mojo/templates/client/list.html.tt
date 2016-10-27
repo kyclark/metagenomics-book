@@ -1,0 +1,41 @@
+<script>
+$(document).ready(function() {
+  $('#clients-tbl').dataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    "iDisplayLength": 10
+  });
+});
+</script>
+
+<h1>Clients ([% clients.count OR "0" %])</h1>
+
+[% IF clients.count > 0 %]
+  <table class="display" id="clients-tbl">
+    <thead>
+    <tr>
+      <th>C#</th>
+      <th>FName</th>
+      <th>LName</th>
+      <th>Sex</th>
+      <th>Race</th>
+      <th>#Dep</th>
+      <th>CW</th>
+    </tr>
+    <thead>
+    <tbody>
+    [% WHILE (client = clients.next) %]
+      <tr>
+        <td>[% client.case_num %]</td>
+        <td><a href="/client/view/[% client.id %]">[% client.first_name %]</a></td>
+        <td><a href="/client/view/[% client.id %]">[% client.last_name %]</a></td>
+        <td>[% client.sex %]</td>
+        <td>[% client.race %]</td>
+        <td>[% client.dependents_rs.count OR '0' %]</td>
+        <td><a href="/case_worker/view/[% client.case_worker.id %]">[% client.case_worker.name %]</a></td>
+      </tr>
+    [% END %]
+    </tbody>
+  </table>
+[% ELSE %]
+  No clients.
+[% END %]

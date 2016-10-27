@@ -1,0 +1,33 @@
+<script>
+$(document).ready(function() {
+  $('#worker-tbl').dataTable({
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    "iDisplayLength": 10
+  });
+});
+</script>
+
+<h1>Case Workers ([% case_workers.count OR "0" %])</h1>
+
+[% IF case_workers.count > 0 %]
+  <table class="display" id="worker-tbl">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Num Clients</th>
+      <th>&nbsp;</th>
+    </tr>
+    <thead>
+    <tbody>
+    [% WHILE (cw = case_workers.next) %]
+      <tr>
+        <td>[% cw.name %]</td>
+        <td>[% cw.clients_rs.count %]</td>
+        <td><a class="btn btn-secondary" href="/case_worker/view/[% cw.id %]">View</a></td>
+      </tr>
+    [% END %]
+    </tbody>
+  </table>
+[% ELSE %]
+  No case workers.
+[% END %]
