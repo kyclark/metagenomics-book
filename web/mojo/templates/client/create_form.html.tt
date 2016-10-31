@@ -1,0 +1,18 @@
+<h1>Create Client</h1>
+<form action="/client/create" method="post">
+<table>
+  <tr>
+    <td>First Name:</td>
+    <td><input name="first_name"></td>
+  </tr>
+  <tr>
+    <td>Last Name:</td>
+    <td><input name="last_name"></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <input type="submit" value="Create Client">
+    </td>
+  </tr>
+</table>
+</form>

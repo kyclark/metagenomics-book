@@ -1,0 +1,16 @@
+requires 'DateTime';
+requires 'Date::Parse';
+requires 'YAML';
+requires 'Moose';
+requires 'DBI';
+requires 'DBD::mysql';
+requires 'List::MoreUtils';
+requires 'Mojolicious';
+requires 'Data::Dump';
+requires 'MooseX::MarkAsMethods';
+requires 'DBIx::Class';
+requires 'MooseX::NonMoose';
+requires 'Text::RecordParser';
+requires 'Template';
+requires 'Mojolicious::Plugin::JSONConfig';
+requires 'Mojolicious::Plugin::TtRenderer';
