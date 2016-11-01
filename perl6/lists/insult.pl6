@@ -1,7 +1,7 @@
 #!/usr/bin/env perl6
 
 sub MAIN (Int :$n=1) {
-    my @adjectives = qw{scurvy old filthy scurry lascivious
+    my @adjectives = qw{scurvy old filthy scurilous lascivious
         foolish rascaly gross rotten corrupt foul loathsome irksome
         heedless unmannered whoreson cullionly false filthsome
         toad-spotted caterwauling wall-eyed insatiate vile peevish

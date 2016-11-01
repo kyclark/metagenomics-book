@@ -1,2 +1,3 @@
-*.swp
+*.sw*
 *.precomp*
+out

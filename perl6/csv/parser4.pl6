@@ -1,6 +1,5 @@
 #!/usr/bin/env perl6
 
-use v6;
 use CSV::Parser;
 
 sub MAIN (Str $file!, Str :$sep=',', Int :$limit=0, Str :$comment) {

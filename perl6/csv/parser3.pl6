@@ -1,7 +1,5 @@
 #!/usr/bin/env perl6
 
-use v6;
-
 sub MAIN (Str $file!, Str :$sep=',', Int :$limit=0, Str :$comment) {
     die "Not a file ($file)" unless $file.IO.f;
 
