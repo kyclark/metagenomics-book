@@ -10,5 +10,5 @@ sub MAIN (Str $input!) {
         when $rna     { put "Looks like RNA" }
         when $protein { put "Looks like protein"; }
         default       { put "Unknown sequence type" }
-   }
+    }
 }
