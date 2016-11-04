@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
 sub MAIN (Str $dna) {
-    my %hash = $dna.uc.comb.categorize({?/<[GC]>/});
-    say "$dna has {%hash<True>.elems}";
+    my @gc = $dna.uc.comb.grep(/<[GC]>/);
+    say "$dna has {@gc.elems}";
 }
