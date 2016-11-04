@@ -1,16 +1,41 @@
 #!/usr/bin/env perl6
 
+my enum Dir     <Horz Vert>;
 my enum HorzDir <Left Right>;
 my enum VertDir <Up Down>;
 
 class Ball {
-    has Int $.max-row;
-    has Int $.max-col;
+    has Int $.rows;
+    has Int $.cols;
+    has Int $.obstacles;
     has Int $.row is rw;
     has Int $.col is rw;
     has HorzDir $.horz-dir is rw;
     has VertDir $.vert-dir is rw;
-    has Int %.obstacles;
+    has %.obstacle-map;
+
+    submethod BUILD (Int :$rows, Int :$cols, Int :$obstacles) {
+        $!rows     = +$rows;
+        $!cols     = +$cols;
+        $!col      = (1..$cols).pick;
+        $!row      = (1..$rows).pick;
+        $!horz-dir = HorzDir.pick;
+        $!vert-dir = VertDir.pick;
+
+        for ^$obstacles {
+            my $r = (1..$rows).roll;
+            my $c = (1..$cols).roll;
+
+            %!obstacle-map{ $r }.push: $c;
+            if Dir.pick == Horz { 
+                if $c < $cols { $c++ } else { $c-- }
+            } 
+            else { 
+                if $r < $rows { $r++ } else { $r-- }
+            }
+            %!obstacle-map{ $r }.push: $c;
+        }
+    }
 
     method Str {
         return "($.row, $.col)";
@@ -19,7 +44,7 @@ class Ball {
     method move {
         if $.horz-dir == Right {
             $.col++;
-            $.reverse-horz-dir if $.col >= $.max-col;
+            $.reverse-horz-dir if $.col >= $.cols;
         }
         else {
             $.col--;
@@ -28,14 +53,16 @@ class Ball {
 
         if $.vert-dir == Down {
             $.row++;
-            $.reverse-vert-dir if $.row >= $.max-row;
+            $.reverse-vert-dir if $.row >= $.rows;
         }
         else {
             $.row--;
             $.reverse-vert-dir if $.row <= 1;
         }
 
-        if %.obstacles{($.row, $.col).join('-')}:exists {
+        if %.obstacle-map{$.row}:exists &&
+           any(%.obstacle-map{$.row}.list) == $.col
+        {
             #$.reverse-horz-dir;
             $.reverse-vert-dir;
         }
@@ -59,20 +86,15 @@ my ($ROWS, $COLS) = qx/stty size/.words;
 sub MAIN (
     Int :$rows=$ROWS - 4,
     Int :$cols=$COLS - 2,
-    Numeric :$refresh=.1,
     Int :$obstacles=0,
+    Numeric :$refresh=.1,
     Bool :$smiley=False,
     Bool :$star=False,
 ) {
     my Str $bar    = '+' ~ '-' x $cols ~ '+';
     my $icon       = $smiley ?? $SMILEY-FACE !! $star ?? $STAR !! $DOT;
-    my @row-range  = 1..$rows;
-    my @col-range  = 1..$cols;
-    my %obstacles  = do @row-range.pick => @col-range.pick for ^$obstacles;
-    my Ball $ball .= new(:horz-dir(HorzDir.pick), :vert-dir(VertDir.pick),
-                         :row(@row-range.pick), :col(@col-range.pick),
-                         :max-row($rows), :max-col($cols),
-                         :obstacles(%obstacles.map(*.kv.join('-') => 1)));
+    my Ball $ball .= new(:rows(+$rows), :cols(+$cols), :obstacles(+$obstacles));
+    my %obstacles  = $ball.obstacle-map;
 
     print "\e[2J"; # clear screen
 
@@ -85,8 +107,10 @@ sub MAIN (
         for 1..$rows -> $this-row {
             my $line = '|' ~ " " x $cols;
 
-            if my $ob-col = %obstacles{ $this-row } {
-                $line.substr-rw($ob-col, 1) = $BLOCK;
+            if my $ob-cols = %obstacles{ $this-row } {
+                for $ob-cols.list -> $c {
+                    $line.substr-rw($c, 1) = $BLOCK;
+                }
             }
             elsif $this-row == $ball.row {
                 $line.substr-rw($ball.col, 1) = $icon;
