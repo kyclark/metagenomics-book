@@ -1,13 +1,18 @@
 #!/usr/bin/env perl6
 
-sub MAIN (Str $file!, Str :$sep=',', Int :$limit=0) {
+sub MAIN (Str $file!, Str :$field!, Str :$sep=',', Int :$limit=0) {
     die "Not a file ($file)" unless $file.IO.f;
 
-    my $fh = open $file;
+    my $fh     = open $file;
     my @fields = $fh.get.split($sep);
 
-    my @data;
+    unless one(@fields) eq $field {
+        die "No $field in $file";
+    }
+
+    my $i = 0;
     for $fh.lines -> $line {
+        $i++;
         my @values = $line.split($sep);
         my %record;
         for 0..^@fields.elems -> $i {
@@ -15,10 +20,9 @@ sub MAIN (Str $file!, Str :$sep=',', Int :$limit=0) {
             my $val = @values[$i];
             %record{ $key } = $val;
         }
-        @data.push(%record);
 
-        last if $limit > 0 && @data.elems > $limit;
+        put %record{ $field } // "";
+
+        last if $limit > 0 && $i == $limit;
     }
-
-    say @data;
 }
