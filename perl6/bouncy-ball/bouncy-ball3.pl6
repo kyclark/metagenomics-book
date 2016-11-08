@@ -1,119 +1,65 @@
 #!/usr/bin/env perl6
 
-my enum Dir     <Horz Vert>;
-my enum HorzDir <Left Right>;
-my enum VertDir <Up Down>;
+subset PosInt of Int where * > 0;
 
 class Ball {
     has Int $.rows;
     has Int $.cols;
-    has Int $.obstacles;
-    has Int $.row is rw;
-    has Int $.col is rw;
-    has HorzDir $.horz-dir is rw;
-    has VertDir $.vert-dir is rw;
-    has %.obstacle-map;
+    has Int $.row is rw = (2..^$!rows).pick;
+    has Int $.col is rw = (2..^$!cols).pick;
+    has Int $.horz-dir is rw = (1, -1).pick;
+    has Int $.vert-dir is rw = (1, -1).pick;
 
-    submethod BUILD (Int :$rows, Int :$cols, Int :$obstacles) {
-        $!rows     = +$rows;
-        $!cols     = +$cols;
-        $!col      = (1..$cols).pick;
-        $!row      = (1..$rows).pick;
-        $!horz-dir = HorzDir.pick;
-        $!vert-dir = VertDir.pick;
+    method Str { join ',', $!row, $!col }
 
-        for ^$obstacles {
-            my $r = (1..$rows).roll;
-            my $c = (1..$cols).roll;
-
-            %!obstacle-map{ $r }.push: $c;
-            if Dir.pick == Horz { 
-                if $c < $cols { $c++ } else { $c-- }
-            } 
-            else { 
-                if $r < $rows { $r++ } else { $r-- }
-            }
-            %!obstacle-map{ $r }.push: $c;
-        }
-    }
-
-    method Str {
-        return "($.row, $.col)";
-    }
+    method pos { ($.row, $.col) }
 
     method move {
-        if $.horz-dir == Right {
-            $.col++;
-            $.reverse-horz-dir if $.col >= $.cols;
-        }
-        else {
-            $.col--;
-            $.reverse-horz-dir if $.col <= 1;
-        }
-
-        if $.vert-dir == Down {
-            $.row++;
-            $.reverse-vert-dir if $.row >= $.rows;
-        }
-        else {
-            $.row--;
-            $.reverse-vert-dir if $.row <= 1;
-        }
-
-        if %.obstacle-map{$.row}:exists &&
-           any(%.obstacle-map{$.row}.list) == $.col
-        {
-            #$.reverse-horz-dir;
-            $.reverse-vert-dir;
-        }
-    }
-
-    method reverse-horz-dir {
-        $.horz-dir = $.horz-dir == Left ?? Right !! Left;
-    }
-
-    method reverse-vert-dir {
-        $.vert-dir = $.vert-dir == Down ?? Up !! Down;
+        $!col += $!horz-dir;
+        $!row += $!vert-dir;
+        $!horz-dir *= -1 if $!col <= 1 || $!col >= $!cols;
+        $!vert-dir *= -1 if $!row <= 1 || $!row >= $.rows;
     }
 }
 
-my $DOT          := "\x25A0"; # ■
-my $STAR         := "\x2605"; # ★
-my $SMILEY-FACE  := "\x263A"; # ☺
-my $BLOCK        := "\x2588"; # █
+my $DOT           = "\x25A0"; # ■
+my $STAR          = "\x2605"; # ★
+my $SMILEY-FACE   = "\x263A"; # ☺
 my ($ROWS, $COLS) = qx/stty size/.words;
 
 sub MAIN (
-    Int :$rows=$ROWS - 4,
-    Int :$cols=$COLS - 2,
-    Int :$obstacles=0,
-    Numeric :$refresh=.1,
+    PosInt :$rows=$ROWS - 4,
+    PosInt :$cols=$COLS - 2,
+    PosInt :$balls=1,
+    Numeric :$refresh=.075,
     Bool :$smiley=False,
-    Bool :$star=False,
 ) {
+    print "\e[2J";
     my Str $bar    = '+' ~ '-' x $cols ~ '+';
     my $icon       = $smiley ?? $SMILEY-FACE !! $star ?? $STAR !! $DOT;
-    my Ball $ball .= new(:rows(+$rows), :cols(+$cols), :obstacles(+$obstacles));
-    my %obstacles  = $ball.obstacle-map;
-
-    print "\e[2J"; # clear screen
+    my Ball @balls = do for ^$balls { Ball.new(:$rows, :$cols) };
 
     loop {
-        $ball.move;
+        .move for @balls;
+
+        my $positions = (@balls».Str).Bag;
+
+        my %row;
+        for $positions.list».kv -> ($pos, $count) {
+            my ($row, $col) = $pos.split(',');
+            %row{ $row }.append: +$col => +$count;
+        }
 
         print "\e[H";
         my $screen = "$bar\n";
 
         for 1..$rows -> $this-row {
             my $line = '|' ~ " " x $cols;
-
-            if my $ob-cols = %obstacles{ $this-row } {
-                for $ob-cols.list -> $c {
-                    $line.substr-rw($c, 1) = $BLOCK;
+            if %row{ $this-row }:exists {
+                for %row{ $this-row }.list».kv -> ($this-col, $count) {
+                    $line.substr-rw($this-col, 1) =
+                        $count == 1 ?? $icon !! $STAR;
                 }
-            }
-            elsif $this-row == $ball.row {
-                $line.substr-rw($ball.col, 1) = $icon;
             }
 
             $screen ~= "$line|\n";
@@ -122,5 +68,7 @@ sub MAIN (
         $screen ~= $bar;
         put $screen;
         sleep $refresh;
+        my @collisions = $positions.grep(*.value > 1).map(*.key);
+        @balls = @balls.grep(none(@collisions) eq *.Str);
     }
 }
