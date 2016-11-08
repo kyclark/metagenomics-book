@@ -36,8 +36,8 @@ sub MAIN (
 ) {
     print "\e[2J";
     my Str $bar    = '+' ~ '-' x $cols ~ '+';
-    my $icon       = $smiley ?? $SMILEY-FACE !! $star ?? $STAR !! $DOT;
-    my Ball @balls = do for ^$balls { Ball.new(:$rows, :$cols) };
+    my $icon       = $smiley ?? $SMILEY-FACE !! $DOT;
+    my Ball @balls = Ball.new(:$rows, :$cols) xx $balls;
 
     loop {
         .move for @balls;
@@ -45,9 +45,9 @@ sub MAIN (
         my $positions = (@balls».Str).Bag;
 
         my %row;
-        for $positions.list».kv -> ($pos, $count) {
-            my ($row, $col) = $pos.split(',');
-            %row{ $row }.append: +$col => +$count;
+        for $positions.list -> (:$key, :$value) {
+            my ($row, $col) = $key.split(',');
+            %row{ $row }.append: $col => $value;
         }
 
         print "\e[H";
@@ -56,9 +56,8 @@ sub MAIN (
         for 1..$rows -> $this-row {
             my $line = '|' ~ " " x $cols;
             if %row{ $this-row }:exists {
-                for %row{ $this-row }.list».kv -> ($this-col, $count) {
-                    $line.substr-rw($this-col, 1) =
-                        $count == 1 ?? $icon !! $STAR;
+                for %row{ $this-row }.list -> (:$key, :$value) {
+                    $line.substr-rw($key, 1) = $value == 1 ?? $icon !! $STAR;
                 }
             }
 
