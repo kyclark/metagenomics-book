@@ -12,23 +12,23 @@ sub MAIN (PosInt :$k=5, PosInt :$max-sd=5, *@files) {
         my $s1    = $bag1.Set;
         my $s2    = $bag2.Set;
         my @union = ($s1 (&) $s2).keys;
-        my $count = (map { $bag1{ $_ } }, @union)
+        my $sum   = (map { $bag1{ $_ } }, @union)
                   + (map { $bag2{ $_ } }, @union);
-        %counts{"$i-$j"} = $count;
+        %counts{"$i-$j"} = $sum;
     }
 
     my @n  = %counts.values;
-    my $mu = mean @n;
+    my $μ  = mean @n;
     my $sd = std-dev @n;
-
-    for %counts.kv -> $pair, $kmers {
+    my $d  = $sd/(@n.elems).sqrt;
+    for %counts.kv -> $pair, $sum {
         # https://en.wikipedia.org/wiki/Student%27s_t-test
-        my $t = ($kmers - $mu) / ($sd/(@n.elems).sqrt);
+        my $t = ($sum - $μ) / $d;
         if $t.abs > $max-sd {
             my ($i, $j) = $pair.split('-');
-            my $f1 = @files[$i-1];
-            my $f2 = @files[$j-1];
-            put "$pair ($kmers) = $t [{$f1.IO.basename}, {$f2.IO.basename}]";
+            my $f1 = @files[$i-1].IO.basename;
+            my $f2 = @files[$j-1].IO.basename;
+            put "$pair ($sum) = $t [$f1, $f2]";
         }
     }
 }
@@ -42,6 +42,7 @@ sub find-kmers (Int $k, Str $file) {
 sub mean (*@n) { @n.sum / @n.elems }
 
 sub std-dev (*@n) {
+    # https://en.wikipedia.org/wiki/Standard_deviation
     my $mean = mean(@n);
     my @dev  = map { ($_ - $mean)² }, @n;
     my $var  = @dev.sum / @dev.elems;
