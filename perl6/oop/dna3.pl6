@@ -1,17 +1,14 @@
 #!/usr/bin/env perl6
 
-class DNA {
-    has Str $.seq;
-
+class DNA is Str {
     multi method ACCEPTS (Str $seq) {
-        return $seq.uc ~~ /^ <[ACGTN]>+ $/;
+        return $seq ~~ /^ :i <[ACGTN]>+ $/;
     }
-
 }
 
-sub MAIN (Str $str) {
-    if $str ~~ DNA {
-        my $dna = DNA.new(seq => $str);
+sub MAIN (Str $seq) {
+    if $seq ~~ DNA {
+        my $dna = DNA.new(value => $seq);
         dd $dna;
     }
     else {

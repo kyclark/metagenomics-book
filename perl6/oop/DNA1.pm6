@@ -11,7 +11,7 @@ class DNA is Str {
         self.bless(value => $str);
     }
 
-    method revcomp {
+    method revcom {
         self.trans(<A C G T a c g t> => <T G C A t g c a>).flip;
     }
 }

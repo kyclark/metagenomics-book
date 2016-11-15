@@ -1,8 +1,10 @@
-#!/usr/bin/env perl6
+enum Direction <Forward Reverse>;
 
 class DNA is Str {
+    has Direction $.direction = Forward;
+
     multi method ACCEPTS (Str $seq) {
-        return $seq.uc ~~ /^ :i <[ACGTN]>+ $/;
+        return $seq ~~ /^ :i <[ACGTN]>+ $/;
     }
 
     method new (*%args) {
@@ -12,14 +14,10 @@ class DNA is Str {
         }
         self.bless(|%args);
     }
-}
 
-sub MAIN (Str $seq) {
-    try {
-        my $dna = DNA.new(value => $seq);
-        dd $dna;
-        CATCH {
-            default { .Str.say }
-        }
+    method length { self.chars }
+
+    method revcom {
+        self.trans(<A C G T a c g t> => <T G C A t g c a>).flip;
     }
 }
