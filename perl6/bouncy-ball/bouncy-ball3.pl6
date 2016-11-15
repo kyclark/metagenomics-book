@@ -30,7 +30,7 @@ my ($ROWS, $COLS) = qx/stty size/.words;
 sub MAIN (
     PosInt :$rows=$ROWS - 4,
     PosInt :$cols=$COLS - 2,
-    PosInt :$balls=1,
+    PosInt :$balls=10,
     Numeric :$refresh=.075,
     Bool :$smiley=False,
 ) {
