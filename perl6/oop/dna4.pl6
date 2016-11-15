@@ -8,7 +8,7 @@ class DNA is Str {
     method new (*%args) {
         my $value = %args<value>.Str;
         if $value !~~ DNA {
-            fail "Not a DNA sequence.";
+            fail "'$value' not a DNA sequence.";
         }
         self.bless(|%args);
     }

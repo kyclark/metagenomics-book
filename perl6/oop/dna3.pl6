@@ -12,6 +12,6 @@ sub MAIN (Str $seq) {
         dd $dna;
     }
     else {
-        put "Not a DNA sequence.";
+        put "'$seq' not a DNA sequence.";
     }
 }

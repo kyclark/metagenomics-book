@@ -7,17 +7,31 @@ class DNA is Str {
         return $seq ~~ /^ :i <[ACGTN]>+ $/;
     }
 
-    method new (*%args) {
+    # e.g., DNA.new($seq1);
+    multi method new (Str $seq) {
+        if $seq !~~ DNA {
+            fail "'$seq' not a DNA sequence.";
+        }
+        self.bless(value => $seq);
+    }
+
+    # e.g., DNA.new(value => $seq1);
+    multi method new (*%args) {
         my $value = %args<value>.Str;
         if $value !~~ DNA {
-            fail "Not a DNA sequence.";
+            fail "'$value' not a DNA sequence.";
         }
         self.bless(|%args);
     }
 
-    method length { self.chars }
-
     method revcom {
         self.trans(<A C G T a c g t> => <T G C A t g c a>).flip;
+    }
+
+    method length { self.chars }
+
+    method hamming (DNA $other) {
+        return (self.chars - $other.chars).abs +
+               (self.comb Z $other.comb).grep({ $^a[0] ne $^a[1] });
     }
 }

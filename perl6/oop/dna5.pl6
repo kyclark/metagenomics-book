@@ -7,7 +7,7 @@ class DNA is Str {
 
     method new (Str $str) {
         if $str.uc !~~ DNA {
-            fail "Not a DNA sequence.";
+            fail "'$str' not a DNA sequence.";
         }
 
         self.bless(value => $str);
