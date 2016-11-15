@@ -17,8 +17,6 @@ sub MAIN (Str $str) {
         my $dna3 = DNA.new(value => $str, direction => Direction.pick);
         printf $temp, ++$i, $dna3, $dna3.direction, $dna3.length;
 
-        CATCH {
-            default { .Str.say }
-        }
+        CATCH { default { .Str.say } }
     }
 }

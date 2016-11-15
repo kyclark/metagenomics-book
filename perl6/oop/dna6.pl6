@@ -7,9 +7,6 @@ sub MAIN (Str $str) {
     try {
         my $dna = DNA.new($str);
         dd $dna;
-
-        CATCH {
-            default { .Str.say }
-        }
+        CATCH { default { .Str.say } }
     }
 }

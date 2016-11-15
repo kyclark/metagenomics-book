@@ -18,8 +18,6 @@ sub MAIN (Str $seq) {
     try {
         my $dna = DNA.new(value => $seq);
         dd $dna;
-        CATCH {
-            default { .Str.say }
-        }
+        CATCH { default { .Str.say } }
     }
 }
