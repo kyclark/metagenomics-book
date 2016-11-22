@@ -3,6 +3,8 @@
 use lib '.';
 use Blackjack;
 
+my $DEALER-MAX := 18;
+
 sub MAIN (Int :$chips where * > 0 = 200, Bool :$aces-high=False) {
     my $stack = $chips;
     loop {
@@ -38,64 +40,80 @@ sub MAIN (Int :$chips where * > 0 = 200, Bool :$aces-high=False) {
 }
 
 sub play (Bool :$aces-high) {
-    my Blackjack $game   .= new(:$aces-high);
+    my Blackjack $player .= new(:$aces-high);
     my Blackjack $dealer .= new(:$aces-high);
-    $game.deal;
-    $dealer.deal;
 
+    my $stand = False;
     loop {
-        put "You   : ", ~$game;
+        put "Player: ", ~$player;
         put "Dealer: ", ~$dealer;
 
-        my $sum = $game.sum;
-        if $sum > 21 {
-            put "Bust! You lose";
-            return -1;
-        }
-
-        if $sum == 21 {
-            put "Blackjack! You win!";
-            return 1;
-        }
-
+        my $player-sum = $player.sum;
         my $dealer-sum = $dealer.sum;
-        if $dealer-sum > 21 {
-            put "Dealer busts! You win!";
+
+        if $stand {
+            if ($dealer-sum == $player-sum) {
+                put "Push. No winner.";
+                return 0;
+            }
+            elsif ($dealer-sum < $player-sum <= 21) || $dealer-sum > 21 {
+                put "Player wins.";
+                return 1;
+            }
+            else {
+                put "Player loses.";
+                return -1;
+            }
+        }
+
+        if $dealer-sum == $player-sum == 21 {
+            put "Push. No winner.";
+            return 0;
+        }
+
+        if $dealer-sum > 21 && $player-sum > 21 {
+            put "Everyone loses!";
+            return 0;
+        }
+
+        if $player-sum == 21 {
+            put "Blackjack! Player wins!";
             return 1;
+        }
+
+        if $player-sum > 21 {
+            put "Bust ($player-sum)! Player loses";
+            return -1;
         }
 
         if $dealer-sum == 21 {
-            put "Dealer has blackjack. You lose!";
+            put "Dealer has blackjack. Player loses!";
             return -1;
+        }
+
+        if $dealer-sum > 21 {
+            put "Dealer busts ($dealer-sum)! Player wins!";
+            return 1;
         }
 
         my $action = prompt "Hit it or quit it? [Yn] ";
         if $action.lc ~~ /^n/ {
-            while $dealer.sum <= 18 {
+            $stand = True;
+            while $dealer.sum < $DEALER-MAX {
                 $dealer.hit;
-                printf "Dealer hits (%s)\n", $dealer.sum;
-            }
-
-            if $dealer.sum < $sum <= 21 {
-                put "You win.";
-                return 1;
-            }
-            elsif $dealer.sum <= 21 {
-                put "You lose.";
-                return -1;
+                put "Dealer draws ", $dealer.last-card;
             }
         }
         else {
-            $game.hit;
-            put "You drew ", $game.last-card;
-        }
-
-        if $dealer.sum >= 18 {
-            put "Dealer stands";
-        }
-        else {
-            put "Dealer hits, draws ", $game.last-card;;
-            $dealer.hit;
+            $player.hit;
+            put "Player draws ", $player.last-card;
+            if $dealer.sum < $DEALER-MAX {
+                $dealer.hit;
+                put "Dealer draws ", $dealer.last-card;
+            }
+            else {
+                put "Dealer stands.";
+            }
         }
     }
 }
