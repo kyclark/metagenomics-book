@@ -3,7 +3,7 @@
 use lib '.';
 use Blackjack;
 
-sub MAIN (Int :$chips where * > 0 = 200) {
+sub MAIN (Int :$chips where * > 0 = 200, Bool :$aces-high=False) {
     my $stack = $chips;
     loop {
         if $stack < 1 {
@@ -11,7 +11,9 @@ sub MAIN (Int :$chips where * > 0 = 200) {
             last;
         }
 
-        my $bet = (prompt "How much you wanna bet? [max $stack] ").Int;
+        my $bet = 
+        (prompt "How much you wanna bet? (max $stack, default 20) ").Int || 20;
+
         if $bet < 1 {
             put "Come on, sissy.  You gotta bet something.";
             next;
@@ -21,22 +23,23 @@ sub MAIN (Int :$chips where * > 0 = 200) {
             next;
         }
 
-        $stack += $bet * play($bet);
-        my $answer = prompt "Play again? [Yn] ";
+        put "$bet on the line!";
+        $stack += $bet * play(:$aces-high);
+        my $answer = prompt "You now have $stack. Play again? [Yn] ";
         if $answer.lc ~~ /^n/ {
             put "Bye now.";
             last;
         }
     }
 
-    printf "You started with %s %s and ended with %s chip%s\n", 
+    printf "You started with %s chip%s and ended with %s chip%s.\n", 
         $chips, $chips == 1 ?? '' !! 's',
         $stack, $stack == 1 ?? '' !! 's';
 }
 
-sub play (Int $chips) {
-    my Blackjack $game   .= new(chips => $chips);
-    my Blackjack $dealer .= new(chips => $chips);
+sub play (Bool :$aces-high) {
+    my Blackjack $game   .= new(:$aces-high);
+    my Blackjack $dealer .= new(:$aces-high);
     $game.deal;
     $dealer.deal;
 
@@ -77,20 +80,21 @@ sub play (Int $chips) {
                 put "You win.";
                 return 1;
             }
-            else {
-                put "You lose."
+            elsif $dealer.sum <= 21 {
+                put "You lose.";
                 return -1;
             }
         }
         else {
             $game.hit;
+            put "You drew ", $game.last-card;
         }
 
         if $dealer.sum >= 18 {
             put "Dealer stands";
         }
         else {
-            put "Dealer hits.";
+            put "Dealer hits, draws ", $game.last-card;;
             $dealer.hit;
         }
     }
