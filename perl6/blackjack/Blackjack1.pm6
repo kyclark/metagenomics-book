@@ -22,8 +22,8 @@ class Card {
         }
 
         $!value = do given $!face {
-            when 'A'     { $!aces-high == True ?? 11 !! 1 } # ace hi/lo
             when /^\d+$/ { +$!face } # 2..10
+            when 'A'     { 11 }
             default      { 10 } # face card
         }
     }
@@ -37,7 +37,6 @@ class Deck {
     submethod TWEAK {
         my @faces  = <2 3 4 5 6 7 8 9 10 J Q K A>;
         my @suites = <Diamonds Hearts Spades Clubs>;
-        put "num-decks ($!num-decks)";
         $!cards  = ( 
             map { Card.new(:face($_.key), :suite($_.value)) },
             ((@faces X @suites) xx $!num-decks).flat.pairup
@@ -46,54 +45,61 @@ class Deck {
 }
 
 class Player {
-    has Int  $.player-num is required;
-    has Deck $.deck       is required;
     has Str  $.name;
-    has Bool $.is-dealer = False;
+    has Int  $.stands-at       = 0;
+    has Int  $.bet       is rw = 0;
+    has Int  $.chips     is rw = 0;
+    has Bool $.has-lost  is rw = False;
+    has Deck $.deck      is rw;
     has @.cards is rw;
+    my $BLACKJACK = 21;
+
+    method stands {
+        $!stands-at > 0 ?? $!stands-at < $.sum !! False;
+    }
+
+    method is-out {
+        $.chips == 0 || $.bet == 0 || $.has-bust || 
+        $.has-lost   || $.has-blackjack;
+    }
+
+    method has-blackjack { $.sum == $BLACKJACK }
+
+    method has-bust { $.sum > $BLACKJACK }
 
     method deal { @!cards = $!deck.cards.grab(2) }
 
-    method hit  { @!cards.push($!deck.cards.grab[0]) }
+    method hit { @!cards.push($!deck.cards.grab[0]) unless $.stands }
 
-    method sum  { @!cards.map(*.value).sum }
+    method sum {
+        my $sum  = @!cards.map(*.value).sum;
+        my @aces = @!cards.grep(*.face eq 'A');
+        while $sum > $BLACKJACK && @aces.pop {
+            $sum -= 10;
+        }
+        $sum;
+    }
 
     method last-card { @!cards[*-1] }
 
     method Str { sprintf "%2d %s", $.sum, @!cards.map(~*).join(' ') }
 
-    submethod TWEAK {
-        $!name ||= "Player " ~ $!player-num;
-        $!is-dealer = $!player-num == 0;
-    }
+    submethod TWEAK { $!name ||= "Player" }
 }
 
 class Blackjack {
-    has Int  $.num-decks   = 2;
-    has Int  $.num-players = 1;
-    has Deck $.deck;
-    has @.players is rw;
-
-    method Str {
-        sprintf "%s player%s", $!num-players, $!num-players == 1 ?? '' !! 's'
-    }
-
-    method get-player (Int $player-num) {
-        if @!players[$player-num]:exists {
-            @!players[$player-num];
-        }
-        else {
-            fail "Not a valid player number ($player-num)";
-        }
-    }
+    has Player $.player is required;
+    has Int    $.num-decks = 2;
+    has Player $.dealer;
+    has Deck   $.deck;
 
     submethod TWEAK {
-        $!deck    = Deck.new(:num-decks($!num-decks));
-        @!players = Player.new(:player-num(0), :deck($!deck));
+        $!deck   = Deck.new(:num-decks($!num-decks));
+        $!dealer = Player.new(
+            :deck($!deck), :name('Dealer'), :stands-at(18)
+        );
 
-        for 1..$!num-players -> $i {
-            push @!players, Player.new(:player-num($i), :deck($!deck));
-        }
-        .deal for @!players;
+        $!player.deck = $!deck;
+        .deal for $!dealer, $!player;
     }
 }
