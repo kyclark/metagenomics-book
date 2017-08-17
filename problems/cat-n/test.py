@@ -4,7 +4,7 @@ from subprocess import getstatusoutput, getoutput
 import os.path
 import re
 
-exe = "./cat-n-ky.sh"
+exe = "./cat-n.sh"
 
 def test_exists():
     assert os.path.exists(exe)
