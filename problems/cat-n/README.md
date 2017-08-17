@@ -1,7 +1,7 @@
 # Assignment
 
-Write a bash script that mimics "cat -n" where you print the line number 
-before each line of input from a given file.  E.g.:
+Write a bash script called "cat-n.sh" that mimics "cat -n" where you print 
+the line number before each line of input from a given file.  E.g.:
 
 ```
 $ ./cat-n.sh input1.txt
