@@ -1,3 +1,5 @@
 *.sw*
 *.precomp*
 out
+__pycache__
+.cache

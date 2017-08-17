@@ -1,5 +1,7 @@
+.PHONY: run test
+
 run:
 	./cat-n.sh input.txt
 
 test:
-	./test.pl6
+	python3 -m nose -v test.py
