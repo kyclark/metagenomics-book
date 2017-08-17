@@ -4,4 +4,4 @@ run:
 	./cat-n.sh input.txt
 
 test:
-	python3 -m nose -v test.py
+	python3 -m pytest test.py
