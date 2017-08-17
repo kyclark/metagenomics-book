@@ -22,7 +22,7 @@ sub process ($source, $uproc-out, $desc-file, $fh) {
     for $desc-file.IO.lines -> $line {
         my ($id, $desc) = $line.split(/\t/);
         %id_to_desc{ $id } = $desc;
-    } 
+    }
 
     for $uproc-out.IO.lines -> $line {
         my @fields = $line.split(',');

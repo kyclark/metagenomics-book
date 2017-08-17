@@ -7,6 +7,6 @@ sub MAIN (Str $file where *.IO.f) {
     }
 
     for %count.grep(*.value > 1) -> (:$key, :$value) {
-        printf "Saw '%s' %s time.\n", $key, $value;
+        printf "Saw '%s' %s times.\n", $key, $value;
     }
 }
