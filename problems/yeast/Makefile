@@ -6,7 +6,8 @@ clean:
 	find . \( -name \*gene\* -o -name chr-\* \) -exec rm {} \;
 
 fasta:
-	echo "Download files into \"fasta\" directory"
+	@echo "Download files into \"fasta\" directory"
+	@./get-fasta.sh
 
 genome: fasta
 	echo OK > fasta/genome.fa

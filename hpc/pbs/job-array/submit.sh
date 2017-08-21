@@ -5,14 +5,13 @@ set -u
 export FTP_LIST=get-me
 export OUT_DIR=$PWD
 export NCFTPGET=/rsgrps/bhurwitz/hurwitzlab/bin/ncftpget
-export PBSDIR=pbs
+export STEP_SIZE=2
+export PBS_DIR=pbs
 
-STEP_SIZE=2
-
-if [[ -d $PBSDIR ]]; then
-  rm -rf $DIR/*
+if [[ -d $PBS_DIR ]]; then
+  rm -rf $PBS_DIR/*
 else
-  mkdir $DIR;
+  mkdir $PBS_DIR;
 fi
 
 NUM_FILES=$(wc -l $FTP_LIST | cut -d ' ' -f 1)
@@ -24,12 +23,12 @@ fi
 
 JOBS=""
 if [[ $NUM_FILES -gt 1 ]]; then
-  JOBS="-J $NUM_FILES"
+  JOBS="-J 1-$NUM_FILES"
   if [[ $STEP_SIZE -gt 1 ]]; then
     JOBS="$JOBS:$STEP_SIZE"
   fi
 fi
 
-JOB_ID=$(qsub $JOBS -N ftp -v OUT_DIR,STEP_SIZE,FTP_LIST,NCFTPGET -j oe -o $PBSDIR ftp-get.sh)
+JOB_ID=$(qsub $JOBS -N ftp -v OUT_DIR,STEP_SIZE,FTP_LIST,NCFTPGET -j oe -o $PBS_DIR ftp-get.sh)
 
-echo "Submitted \"$FILE\" files to job \"$JOB_ID\""
+echo "Submitted \"$NUM_FILES\" files to job \"$JOB_ID\""
