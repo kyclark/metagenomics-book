@@ -1,0 +1,12 @@
+Trinidad and Tobago	1952	662850	Americas	59.1	3023.271928
+Trinidad and Tobago	1957	764900	Americas	61.8	4100.3934
+Trinidad and Tobago	1962	887498	Americas	64.9	4997.523971
+Trinidad and Tobago	1967	960155	Americas	65.4	5621.368472
+Trinidad and Tobago	1972	975199	Americas	65.9	6619.551419
+Trinidad and Tobago	1977	1039009	Americas	68.3	7899.554209
+Trinidad and Tobago	1982	1116479	Americas	68.832	9119.528607
+Trinidad and Tobago	1987	1191336	Americas	69.582	7388.597823
+Trinidad and Tobago	1992	1183669	Americas	69.862	7370.990932
+Trinidad and Tobago	1997	1138101	Americas	69.465	8792.573126
+Trinidad and Tobago	2002	1101832	Americas	68.976	11460.60023
+Trinidad and Tobago	2007	1056608	Americas	69.819	18008.50924

@@ -1,0 +1,12 @@
+Bosnia and Herzegovina	1952	2791000	Europe	53.82	973.5331948
+Bosnia and Herzegovina	1957	3076000	Europe	58.45	1353.989176
+Bosnia and Herzegovina	1962	3349000	Europe	61.93	1709.683679
+Bosnia and Herzegovina	1967	3585000	Europe	64.79	2172.352423
+Bosnia and Herzegovina	1972	3819000	Europe	67.45	2860.16975
+Bosnia and Herzegovina	1977	4086000	Europe	69.86	3528.481305
+Bosnia and Herzegovina	1982	4172693	Europe	70.69	4126.613157
+Bosnia and Herzegovina	1987	4338977	Europe	71.14	4314.114757
+Bosnia and Herzegovina	1992	4256013	Europe	72.178	2546.781445
+Bosnia and Herzegovina	1997	3607000	Europe	73.244	4766.355904
+Bosnia and Herzegovina	2002	4165416	Europe	74.09	6018.975239
+Bosnia and Herzegovina	2007	4552198	Europe	74.852	7446.298803

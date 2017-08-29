@@ -1,0 +1,12 @@
+Dominican Republic	1952	2491346	Americas	45.928	1397.717137
+Dominican Republic	1957	2923186	Americas	49.828	1544.402995
+Dominican Republic	1962	3453434	Americas	53.459	1662.137359
+Dominican Republic	1967	4049146	Americas	56.751	1653.723003
+Dominican Republic	1972	4671329	Americas	59.631	2189.874499
+Dominican Republic	1977	5302800	Americas	61.788	2681.9889
+Dominican Republic	1982	5968349	Americas	63.727	2861.092386
+Dominican Republic	1987	6655297	Americas	66.046	2899.842175
+Dominican Republic	1992	7351181	Americas	68.457	3044.214214
+Dominican Republic	1997	7992357	Americas	69.957	3614.101285
+Dominican Republic	2002	8650322	Americas	70.847	4563.808154
+Dominican Republic	2007	9319622	Americas	72.235	6025.374752

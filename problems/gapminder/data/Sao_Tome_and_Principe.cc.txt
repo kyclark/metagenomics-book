@@ -1,0 +1,12 @@
+Sao Tome and Principe	1952	60011	Africa	46.471	879.5835855
+Sao Tome and Principe	1957	61325	Africa	48.945	860.7369026
+Sao Tome and Principe	1962	65345	Africa	51.893	1071.551119
+Sao Tome and Principe	1967	70787	Africa	54.425	1384.840593
+Sao Tome and Principe	1972	76595	Africa	56.48	1532.985254
+Sao Tome and Principe	1977	86796	Africa	58.55	1737.561657
+Sao Tome and Principe	1982	98593	Africa	60.351	1890.218117
+Sao Tome and Principe	1987	110812	Africa	61.728	1516.525457
+Sao Tome and Principe	1992	125911	Africa	62.742	1428.777814
+Sao Tome and Principe	1997	145608	Africa	63.306	1339.076036
+Sao Tome and Principe	2002	170372	Africa	64.337	1353.09239
+Sao Tome and Principe	2007	199579	Africa	65.528	1598.435089

@@ -1,0 +1,12 @@
+Central African Republic	1952	1291695	Africa	35.463	1071.310713
+Central African Republic	1957	1392284	Africa	37.464	1190.844328
+Central African Republic	1962	1523478	Africa	39.475	1193.068753
+Central African Republic	1967	1733638	Africa	41.478	1136.056615
+Central African Republic	1972	1927260	Africa	43.457	1070.013275
+Central African Republic	1977	2167533	Africa	46.775	1109.374338
+Central African Republic	1982	2476971	Africa	48.295	956.7529907
+Central African Republic	1987	2840009	Africa	50.485	844.8763504
+Central African Republic	1992	3265124	Africa	49.396	747.9055252
+Central African Republic	1997	3696513	Africa	46.066	740.5063317
+Central African Republic	2002	4048013	Africa	43.308	738.6906068
+Central African Republic	2007	4369038	Africa	44.741	706.016537

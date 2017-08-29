@@ -1,0 +1,12 @@
+Equatorial Guinea	1952	216964	Africa	34.482	375.6431231
+Equatorial Guinea	1957	232922	Africa	35.983	426.0964081
+Equatorial Guinea	1962	249220	Africa	37.485	582.8419714
+Equatorial Guinea	1967	259864	Africa	38.987	915.5960025
+Equatorial Guinea	1972	277603	Africa	40.516	672.4122571
+Equatorial Guinea	1977	192675	Africa	42.024	958.5668124
+Equatorial Guinea	1982	285483	Africa	43.662	927.8253427
+Equatorial Guinea	1987	341244	Africa	45.664	966.8968149
+Equatorial Guinea	1992	387838	Africa	47.545	1132.055034
+Equatorial Guinea	1997	439971	Africa	48.245	2814.480755
+Equatorial Guinea	2002	495627	Africa	49.348	7703.4959
+Equatorial Guinea	2007	551201	Africa	51.579	12154.08975
