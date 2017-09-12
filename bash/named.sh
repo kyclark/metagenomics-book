@@ -6,19 +6,17 @@ GREETING=""
 NAME="Stranger"
 
 function USAGE() {
-  printf "Usage:\n  %s -g GREETING [-n NAME]\n\n" $(basename $0)
-  echo "Required arguments:"
-  echo " -g GREETING"
-  echo
-  echo "Options:"
-  echo " -n NAME ($NAME)"
-  echo 
-  exit ${1:-0}
+    printf "Usage:\n  %s -g GREETING [-n NAME]\n\n" $(basename $0)
+    echo "Required arguments:"
+    echo " -g GREETING"
+    echo
+    echo "Options:"
+    echo " -n NAME ($NAME)"
+    echo 
+    exit ${1:-0}
 }
 
-if [[ $# -eq 0 ]]; then
-  USAGE 1
-fi
+[[ $# -eq 0 ]] && USAGE 1
 
 while getopts :g:n:h OPT; do
   case $OPT in
@@ -41,8 +39,6 @@ while getopts :g:n:h OPT; do
   esac
 done
 
-if [[ ${#GREETING} -lt 1 ]]; then
-  USAGE 1
-fi
+[[ -z "$GREETING" ]] && USAGE 1
 
-echo "$GREETING, $NAME"
+echo "$GREETING, $NAME!"
