@@ -5,7 +5,6 @@ from subprocess import getstatusoutput, getoutput
 import os.path
 import re
 
-
 def test_exists():
     """test that scripts exist"""
     for script in ["hello.sh", "hello-arg.sh", "hello-arg2.sh"]:
