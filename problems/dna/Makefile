@@ -1,8 +1,10 @@
+.PHONY: run file test
+
 run:
-	./dna.pl6 AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC
+	./dna.py AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC
 
 file:
-	./dna.pl6 test.txt
+	./dna.py test.txt
 
 test:
-	./test.pl6
+	python3 -m pytest -v test.py

@@ -12,5 +12,5 @@ fi
 i=0
 for FILE in $DIR/*; do
     let i++
-    printf "%3d: %s\n" $i "$FILE"
+    printf "%3d: %s\n" $i $(basename "$FILE")
 done
