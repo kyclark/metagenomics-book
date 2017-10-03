@@ -70,7 +70,6 @@ def main():
             print('Will not overwrite. Bye!')
             sys.exit()
 
-
     fh = open(out_file, 'w')
     text = ARGPARSE if args.use_argparse else SIMPLE
     fh.write(text)
