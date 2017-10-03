@@ -28,12 +28,11 @@ def main():
 
     seen = {}
     words_by_letter = defaultdict(list)
-    for line in open(wordlist):
-        for word in line.lower().split():
-            clean = re.sub('[^a-z]', '', word)
-            if re.match(goodword, clean) and clean not in seen and clean not in badwords:
-                seen[clean] = 1
-                words_by_letter[clean[0]].append(clean)
+    for word in open(wordlist).read().lower().split():
+        clean = re.sub('[^a-z]', '', word)
+        if re.match(goodword, clean) and clean not in seen and clean not in badwords:
+            seen[clean] = 1
+            words_by_letter[clean[0]].append(clean)
 
     len_acronym = len(acronym)
     definitions = []
@@ -58,8 +57,7 @@ def main():
 def get_args():
     """get arguments"""
     parser = argparse.ArgumentParser(description='Explain acronyms')
-    parser.add_argument('-a', '--acronym', help='The acronym',
-                        type=str, metavar='STR', required=True)
+    parser.add_argument('acronym', help='Acronym', type=str, metavar='STR')
     parser.add_argument('-n', '--num', help='Maximum number of definitions',
                         type=int, metavar='NUM', default=5)
     parser.add_argument('-w', '--wordlist', help='Dictionary/word file',
