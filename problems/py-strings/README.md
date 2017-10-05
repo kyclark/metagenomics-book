@@ -73,3 +73,25 @@ TTAC
 AAAA
 CCCC
 ```
+
+# Tests
+
+A passing test suite should look similar to:
+
+```
+$ make test
+python3 -m pytest -v test.py
+============================= test session starts ==============================
+platform darwin -- Python 3.5.3, pytest-3.0.7, py-1.4.33, pluggy-0.4.0 -- /Users/kyclark/anaconda3/bin/python3
+cachedir: .cache
+rootdir: /Users/kyclark/work/secret-book/problems/py-strings, inifile:
+collected 5 items
+
+test.py::test_exists PASSED
+test.py::test_usage PASSED
+test.py::test_gc PASSED
+test.py::test_gc2 PASSED
+test.py::test_trimmer PASSED
+
+=========================== 5 passed in 0.42 seconds ===========================
+```
