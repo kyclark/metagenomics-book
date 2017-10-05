@@ -4,10 +4,20 @@
 from subprocess import getstatusoutput, getoutput
 import os.path
 import re
+import random, string
 
 gc = "./gc.py"
 gc2 = "./gc2.py"
 trimmer = "./trim.py"
+
+def badfile():
+    length = 10
+    letters = string.ascii_lowercase
+    badfile = ''
+    while True:
+        badfile = ''.join(random.choice(letters) for i in range(length))
+        if not os.path.isfile(badfile):
+            return badfile
 
 def test_exists():
     """scripts exist"""
@@ -36,6 +46,11 @@ def test_gc2():
     """gc2"""
     out1 = getoutput(gc2 + ' seqs.txt')
     assert out1.rstrip() == '12\n0\n100'
+    
+    bad = badfile()
+    retval, out2 = getstatusoutput('{} {}'.format(gc2, bad))
+    assert retval > 0
+    assert out2.rstrip() == '"{}" is not a file'.format(bad)
 
 def test_trimmer():
     """trimmer"""
