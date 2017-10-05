@@ -4,21 +4,21 @@
 import sys
 import os
 
-args = sys.argv
+args = sys.argv[1:]
 
-if len(args) != 2:
-    print('Usage: {} FILE'.format(os.path.basename(args[0])))
+if len(args) != 1:
+    print('Usage: {} FILE'.format(os.path.basename(sys.argv[0])))
     sys.exit(1)
 
-file = args[1]
+file = args[0]
 
 if not os.path.isfile(file):
     print('"{}" is not a file'.format(file))
     sys.exit(1)
 
 for line in open(file):
-    for word in line.split():
-        if len(word) > 1:
-            rev = ''.join(list(reversed(word)))
+    for word in line.lower().split():
+        if len(word) > 2:
+            rev = ''.join(reversed(word))
             if rev == word:
                 print(word)

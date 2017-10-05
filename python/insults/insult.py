@@ -19,10 +19,12 @@ recreant degenerate Judas butt cur Satan ass coxcomb dandy gull minion
 ratcatcher maw fool rogue lunatic varlet worm
 """.split()
 
-args = sys.argv
-NUM = int(args[1]) if len(args) > 1 else 5
+args = sys.argv[1:]
+num = 5
+if len(args) > 0 and args[0].isdigit():
+    num = int(args[0]) 
 
-for i in range(0, NUM):
+for i in range(0, num):
     adjs = []
     for j in range(0, 3):
         adjs.append(random.choice(ADJECTIVES))

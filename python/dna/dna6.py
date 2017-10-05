@@ -5,13 +5,13 @@ import sys
 import os
 from collections import defaultdict
 
-args = sys.argv
+args = sys.argv[1:]
 
-if len(args) != 2:
-    print('Usage: {} DNA'.format(os.path.basename(args[0])))
+if len(args) != 1:
+    print('Usage: {} DNA'.format(os.path.basename(sys.argv[0])))
     sys.exit(1)
 
-dna = args[1]
+dna = args[0]
 
 count = defaultdict(int)
 
