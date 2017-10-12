@@ -55,14 +55,15 @@ list of the kmers and their counts:
 
 ```
 $ ./kmer_counter.py 3 AACCAACCAACCAACC
-AAC 2
-ACC 2
-CAA 1
-CCA 1
-$ ./kmer_counter.py 4 AACCAACC
-AACCAACC
-AACC 2
-ACCA 1
-CAAC 1
-CCAA 1
+AACCAACCAACCAACC
+AAC 4
+ACC 4
+CAA 3
+CCA 3
+$ ./kmer_counter.py 4 AACCAACCAACCAACC
+AACCAACCAACCAACC
+AACC 4
+ACCA 3
+CAAC 3
+CCAA 3
 ```
