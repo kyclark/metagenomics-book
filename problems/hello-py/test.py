@@ -8,13 +8,11 @@ import re
 hello = "./hello.py"
 counter = "./vowel_counter.py"
 
-# --------------------------------------------------
 def test_exists():
     """scripts exist"""
     for script in [hello, counter]:
         assert os.path.exists(script)
 
-# --------------------------------------------------
 def test_usage():
     """usage"""
     for script in [hello, counter]:
@@ -22,7 +20,6 @@ def test_usage():
         assert retval > 0
         assert re.match("usage", out, re.IGNORECASE)
 
-# --------------------------------------------------
 def test_hello():
     """runs hello"""
     out1 = getoutput(hello + ' Alice')
@@ -34,7 +31,6 @@ def test_hello():
     out3 = getoutput(hello + ' Greg Peter Bobby Marcia Jane Cindy')
     assert out3.rstrip() == 'Hello to the 6 of you: Greg, Peter, Bobby, Marcia, Jane, and Cindy!'
 
-# --------------------------------------------------
 def test_counter():
     """runs counter"""
     out1 = getoutput(counter + ' if')
