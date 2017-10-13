@@ -11,14 +11,10 @@ if len(args) != 1:
     print('Usage: {} DNA'.format(os.path.basename(sys.argv[0])))
     sys.exit(1)
 
-arg = args[0]
-dna = ''
-if os.path.isfile(arg):
-    dna = ''.join(open(arg).read().splitlines())
-else:
-    dna = arg
+dna = args[0]
 
 count = defaultdict(int)
+
 for base in dna.lower():
     count[base] += 1
 

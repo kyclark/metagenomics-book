@@ -19,7 +19,7 @@ for base in dna.lower():
         count[base] += 1
 
 counts = []
-for base in "acgt":
+for base in sorted(count.keys()):
     counts.append(str(count[base]))
 
 print(' '.join(counts))

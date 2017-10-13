@@ -4,29 +4,24 @@
 import sys
 import random
 
-ADJECTIVES = """
+adjectives = """
 scurvy old filthy scurilous lascivious foolish rascaly gross rotten corrupt
 foul loathsome irksome heedless unmannered whoreson cullionly false filthsome
 toad-spotted caterwauling wall-eyed insatiate vile peevish infected
 sodden-witted lecherous ruinous indistinguishable dishonest thin-faced
 slanderous bankrupt base detestable rotten dishonest lubbery
-""".split()
+""".strip().split()
 
-NOUNS = """
+nouns = """
 knave coward liar swine villain beggar slave scold jolthead whore barbermonger
 fishmonger carbuncle fiend traitor block ape braggart jack milksop boy harpy
 recreant degenerate Judas butt cur Satan ass coxcomb dandy gull minion
 ratcatcher maw fool rogue lunatic varlet worm
-""".split()
+""".strip().split()
 
 args = sys.argv[1:]
-num = 5
-if len(args) > 0 and args[0].isdigit():
-    num = int(args[0]) 
+num = int(args[0]) if len(args) > 0 and args[0].isdigit() else 5
 
-for i in range(0, num):
-    adjs = []
-    for j in range(0, 3):
-        adjs.append(random.choice(ADJECTIVES))
-
-    print('You {} {}!'.format(', '.join(adjs), random.choice(NOUNS)))
+for _ in range(num):
+    adjs = [random.choice(adjectives) for _ in range(3)]
+    print('You {} {}!'.format(', '.join(adjs), random.choice(nouns)))

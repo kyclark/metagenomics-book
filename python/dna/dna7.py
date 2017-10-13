@@ -3,7 +3,7 @@
 
 import sys
 import os
-from collections import defaultdict
+from collections import Counter
 
 args = sys.argv[1:]
 
@@ -13,9 +13,10 @@ if len(args) != 1:
 
 dna = args[0]
 
-count = defaultdict(int)
+count = Counter(dna.lower())
 
-for base in dna.lower():
-    count[base] += 1
+counts = []
+for base in "acgt":
+    counts.append(str(count[base]))
 
-print(' '.join(map(lambda b: str(count[b]), "acgt")))
+print(' '.join(counts))

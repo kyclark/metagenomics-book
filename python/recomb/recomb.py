@@ -23,7 +23,7 @@ if not 2 <= num_genes <= 10:
 promotors = []
 coding = []
 terminators = []
-for i in range(0, num_genes):
+for i in range(num_genes):
     n = str(i + 1)
     promotors.append('P' + n)
     coding.append('C' + n)

@@ -4,7 +4,7 @@
 import argparse
 import os
 import sys
-from collections import defaultdict
+from collections import Counter
 
 # --------------------------------------------------
 def get_args():
@@ -41,9 +41,7 @@ def main():
     else:
         text = arg
 
-    count = defaultdict(int)
-    for letter in text.lower():
-        count[letter] += 1
+    count = Counter(text.lower())
 
     if charsort:
         letters = sorted(count.keys())

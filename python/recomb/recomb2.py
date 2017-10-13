@@ -20,9 +20,9 @@ if not 2 <= num_genes <= 10:
     print('NUM_GENES must be greater than 1, less than 10')
     sys.exit(1)
 
-promotors = ['P' + str(n + 1) for n in range(0, num_genes)]
-coding = ['C' + str(n + 1) for n in range(0, num_genes)]
-terminators = ['T' + str(n + 1) for n in range(0, num_genes)]
+promotors = ['P' + str(n + 1) for n in range(num_genes)]
+coding = ['C' + str(n + 1) for n in range(num_genes)]
+terminators = ['T' + str(n + 1) for n in range(num_genes)]
 
 print('N = "{}"'.format(num_genes))
 for i, combo in enumerate(chain(product(promotors, coding, terminators))):

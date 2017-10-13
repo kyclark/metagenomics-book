@@ -12,7 +12,7 @@ if len(args) != 1:
 
 letter = args[0].upper()
 
-text = """
+lines = """
 A is for Amy who fell down the stairs.
 B is for Basil assaulted by bears.
 C is for Clara who wasted away.
@@ -39,12 +39,11 @@ W is for Winnie embedded in ice.
 X is for Xerxes devoured by mice.
 Y is for Yorick whose head was bashed in.
 Z is for Zillah who drank too much gin.
-"""
+""".strip().splitlines()
 
 lookup = {}
-for line in text.splitlines():
-    if line:
-        lookup[line[0]] = line
+for line in lines:
+    lookup[line[0]] = line
 
 if letter in lookup:
     print(lookup[letter])

@@ -3,7 +3,7 @@
 
 import sys
 import os
-from collections import defaultdict
+from collections import Counter
 
 args = sys.argv
 
@@ -18,10 +18,7 @@ if os.path.isfile(arg):
 else:
     text = arg
 
-count = defaultdict(int)
-for letter in text.lower():
-    count[letter] += 1
+count = Counter(text.lower())
 
-print(count)
 for letter, num in count.items():
     print('{} {:5}'.format(letter, num))

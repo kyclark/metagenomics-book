@@ -21,7 +21,7 @@ if not 2 <= num_genes <= 10:
     sys.exit(1)
 
 def gen(prefix):
-    return [prefix + str(n + 1) for n in range(0, num_genes)]
+    return [prefix + str(n + 1) for n in range(num_genes)]
 
 promotors = gen('P')
 coding = gen('C')
