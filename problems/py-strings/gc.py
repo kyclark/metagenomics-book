@@ -19,7 +19,8 @@ if seq_len < 1:
 
 gc = 0
 for char in seq.lower():
-    if char == 'g' or char == 'c':
+    #if char == 'g' or char == 'c':
+    if char in 'gc':
         gc += 1
 
 print('{}% GC'.format(int(gc/seq_len * 100)))
