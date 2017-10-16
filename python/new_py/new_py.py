@@ -31,12 +31,14 @@ import argparse
 import os
 import sys
 
+# --------------------------------------------------
 def get_args():
     parser = argparse.ArgumentParser(description='Argparse Python script')
     parser.add_argument('-a', '--arg', help='An argument',
                         type=str, default='foo')
     return parser.parse_args()
 
+# --------------------------------------------------
 def main():
     args = get_args()
     arg = args.arg
@@ -48,6 +50,7 @@ def main():
 
     print('Arg is "{}"'.format(arg))
 
+# --------------------------------------------------
 if __name__ == '__main__':
     main()
 """
