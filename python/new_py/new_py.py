@@ -34,21 +34,27 @@ import sys
 # --------------------------------------------------
 def get_args():
     parser = argparse.ArgumentParser(description='Argparse Python script')
-    parser.add_argument('-a', '--arg', help='An argument',
-                        type=str, default='foo')
+    parser.add_argument('positional', metavar='str', help='A positional argument')
+    parser.add_argument('-a', '--arg', help='A named string argument',
+                        metavar='str', type=str, default='')
+    parser.add_argument('-i', '--int', help='A named integer argument',
+                        metavar='int', type=int, default=0)
+    parser.add_argument('-f', '--flag', help='A boolean flag', 
+                        action='store_true')
     return parser.parse_args()
 
 # --------------------------------------------------
 def main():
     args = get_args()
-    arg = args.arg
+    str_arg = args.arg
+    int_arg = args.int
+    flag_arg = args.flag
+    pos_arg = args.positional
 
-    if len(arg) < 1:
-        print('Missing --arg!')
-        sys.exit(1)
-
-
-    print('Arg is "{}"'.format(arg))
+    print('str_arg = "{}"'.format(str_arg))
+    print('int_arg = "{}"'.format(int_arg))
+    print('flag_arg = "{}"'.format(flag_arg))
+    print('positional = "{}"'.format(pos_arg))
 
 # --------------------------------------------------
 if __name__ == '__main__':
@@ -67,7 +73,7 @@ def main():
     if not re.search('\.py$', out_file):
         out_file = out_file + '.py'
 
-    if os.path.isfile(out_file):
+    if os.path.isfile(out_file) and not args.overwrite:
         yn = input('"{}" exists.  Overwrite? [yN] '.format(out_file))
         if not re.match('^[yY]', yn):
             print('Will not overwrite. Bye!')
@@ -86,6 +92,8 @@ def get_args():
     parser.add_argument('program', help='Program name', type=str)
     parser.add_argument('-a', '--argparse', help='Use argparse',
                         dest='use_argparse', action='store_true')
+    parser.add_argument('-f', '--force', help='Overwrite existing',
+                        dest='overwrite', action='store_true')
     return parser.parse_args()
 
 # --------------------------------------------------
