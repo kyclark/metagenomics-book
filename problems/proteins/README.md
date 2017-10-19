@@ -34,6 +34,16 @@ $ ./prot.py gaacuacaccguucuccuggu
 ELHRSPG
 ```
 
+You will probably want to understand this bit of code to help you pull out 
+the codons:
+
+```
+>>> seq = 'AACTAGA'
+>>> k = 3
+>>> [seq[i:i+k] for i in range(0, len(seq), k)]
+['AAC', 'TAG', 'A']
+```
+
 Passing tests should look like:
 
 ```

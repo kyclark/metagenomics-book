@@ -45,8 +45,8 @@ def main():
     plural = '' if num_common == 1 else 's'
     tot1 = len(kmers1.keys())
     tot2 = len(kmers2.keys())
-    msg = 'There {} {} kmer{} in common between "{}" ({}) and "{}" ({}).'
-    print(msg.format(verb, num_common, plural, file1, tot1, file2, tot2))
+    msg = 'There {} {} {}-mer{} in common between "{}" ({}) and "{}" ({}).'
+    print(msg.format(verb, num_common, size, plural, file1, tot1, file2, tot2))
 
     freq_kmers1 = sum(kmers1.values())
     freq_kmers2 = sum(kmers2.values())
