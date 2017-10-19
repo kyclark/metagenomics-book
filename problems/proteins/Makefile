@@ -1,8 +1,8 @@
-run:
-	./prot.pl6 AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA
+run1:
+	./prot.pl6 `cat input1.txt`
 
-file:
-	./prot.pl6 input.txt
+run2:
+	./prot.pl6 `cat input2.txt`
 
 test:
-	./test.pl6
+	python3 -m pytest -v test.py
