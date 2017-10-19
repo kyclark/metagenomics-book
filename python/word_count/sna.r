@@ -20,6 +20,13 @@ option_list = list(
     metavar = "character"
   ),
   make_option(
+    c("-t", "--outfile"),
+    default = "sna-gbme.pdf",
+    type = "character",
+    help = "outdir",
+    metavar = "character"
+  ),
+  make_option(
     c("-o", "--outdir"),
     default = getwd(),
     type = "character",
@@ -42,13 +49,13 @@ option_list = list(
   )
 );
 
-opt_parser  = OptionParser(option_list = option_list);
-opt         = parse_args(opt_parser);
-
+opt_parser   = OptionParser(option_list = option_list);
+opt          = parse_args(opt_parser);
 matrix_file = opt$file
-out_dir     = opt$outdir
-n_iter      = opt$number
-alias_file  = opt$alias
+out_filename = opt$outfile
+out_dir      = opt$outdir
+n_iter       = opt$number
+alias_file   = opt$alias
 
 Y = as.matrix(read.table(matrix_file, header = TRUE))
 
@@ -75,8 +82,7 @@ if (!file.exists(GBME_OUT)) {
     print(meta_files)
     k = length(meta_files)
 
-    printf("Found %s file%s in meta dir '%s'\n", k, 
-      if (k == 1) { '' } else {'s'}, meta_dir)
+    printf("Found %s file%s in meta dir '%s'\n", k, if (k == 1) { '' } else {'s'}, meta_dir)
 
     if (k > 0) {
       Xss = array(NA, dim = c(n,n,k))
@@ -201,7 +207,7 @@ if (k == 2) {
   b <- b / max(b)
   
   par(mfrow = c(1,1))
-  pdf(file.path(out_dir, "sna-gbme.pdf"), width = 6, height = 6)
+  pdf(file.path(out_dir, out_filename), width = 6, height = 6)
   plot(
     Z.pm[,1],Z.pm[,2],xlab = "",ylab = "",type = "n",xlim = range(PZ[,1,]),
     ylim = range(PZ[,2,])

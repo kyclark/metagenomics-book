@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import string
 from collections import defaultdict
 from itertools import permutations
 from math import log
@@ -15,7 +16,8 @@ if len(files) < 2:
     print(msg.format(os.path.basename(sys.argv[0])))
     sys.exit(1)
 
-regex = re.compile('[^a-zA-Z]')
+#regex = re.compile('[^a-zA-Z]')
+regex = re.compile('[' + string.punctuation + ']')
 count_by_file = {}
 for file in files:
     if not os.path.isfile(file):
