@@ -25,6 +25,10 @@ def main():
     high = args.max
     guesses_allowed = args.guesses
 
+    if low < 1:
+        print('Cannot go lower than 1')
+        sys.exit(1)
+
     secret = random.randint(low, high)
     num_guesses = 0
     prompt = 'Guess a number between {} and {}: '.format(low, high)
