@@ -49,7 +49,7 @@ Default values for the options:
 * start: 0
 * end: 0
 * min: 0
-* outfile: <file> + ".trimmed"
+* outfile: [file] + ".trimmed"
 
 So, e.g., given "dolphin.fa" as the input file, you would create an output 
 file called "dolphin.fa.trimmed."

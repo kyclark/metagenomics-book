@@ -9,6 +9,7 @@ import subprocess
 
 # --------------------------------------------------
 SIMPLE = """#!/usr/bin/env python3
+\"\"\"docstring\"\"\"
 
 import os
 import sys
@@ -26,13 +27,14 @@ print('Arg is "{}"'.format(arg))
 
 # --------------------------------------------------
 ARGPARSE = """#!/usr/bin/env python3
+\"\"\"docstring\"\"\"
 
 import argparse
-import os
 import sys
 
 # --------------------------------------------------
 def get_args():
+    \"\"\"get args\"\"\"
     parser = argparse.ArgumentParser(description='Argparse Python script')
     parser.add_argument('positional', metavar='str', help='A positional argument')
     parser.add_argument('-a', '--arg', help='A named string argument',
@@ -45,6 +47,7 @@ def get_args():
 
 # --------------------------------------------------
 def main():
+    \"\"\"main\"\"\"
     args = get_args()
     str_arg = args.arg
     int_arg = args.int
@@ -70,6 +73,7 @@ def main():
         print('Not a usable filename "{}"'.format(out_file))
         sys.exit(1)
 
+    out_file = re.sub(r'-', r'_', out_file)
     if not re.search('\.py$', out_file):
         out_file = out_file + '.py'
 
