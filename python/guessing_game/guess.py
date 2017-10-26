@@ -8,7 +8,7 @@ import sys
 # --------------------------------------------------
 def get_args():
     """get args"""
-    parser = argparse.ArgumentParser(description='Argparse Python script')
+    parser = argparse.ArgumentParser(description='Number guessing game')
     parser.add_argument('-m', '--min', help='Minimum value',
                         metavar='int', type=int, default=1)
     parser.add_argument('-x', '--max', help='Maximum value',
@@ -26,16 +26,28 @@ def main():
     guesses_allowed = args.guesses
 
     if low < 1:
-        print('Cannot go lower than 1')
+        print('--min cannot be lower than 1')
+        sys.exit(1)
+
+    if guesses_allowed < 1:
+        print('--guesses cannot be lower than 1')
+        sys.exit(1)
+
+    if low > high:
+        print('--min "{}" is higher than --max "{}"'.format(low, high))
         sys.exit(1)
 
     secret = random.randint(low, high)
     num_guesses = 0
-    prompt = 'Guess a number between {} and {}: '.format(low, high)
+    prompt = 'Guess a number between {} and {} (q to quit): '.format(low, high)
 
     while True:
         guess = input('[{}] {}'.format(num_guesses, prompt))
         num_guesses += 1
+
+        if guess == 'q':
+            print('Now you will never know the answer.')
+            sys.exit(0)
 
         if not guess.isdigit():
             print('"{}" is not a number'.format(guess))
@@ -47,6 +59,8 @@ def main():
         if num_guesses >= guesses_allowed:
             print('Too many guesses! The number was "{}."'.format(secret))
             sys.exit()
+        elif num < low or num > high:
+            print('Number is not in the allowed range')
         elif num == secret:
             print('You win!')
             break
