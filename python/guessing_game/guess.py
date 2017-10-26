@@ -25,8 +25,16 @@ def main():
     high = args.max
     guesses_allowed = args.guesses
 
+    if low < 1:
+        print('--min cannot be lower than 1')
+        sys.exit(1)
+
+    if guesses_allowed < 1:
+        print('--guesses cannot be lower than 1')
+        sys.exit(1)
+
     if low > high:
-        print('Min value "{}" is higher than max "{}"'.format(low, high))
+        print('--min "{}" is higher than --max "{}"'.format(low, high))
         sys.exit(1)
 
     secret = random.randint(low, high)
