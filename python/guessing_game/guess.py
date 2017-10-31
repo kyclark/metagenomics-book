@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""guess the number game"""
+"""docstring"""
 
 import argparse
 import random
@@ -8,7 +8,7 @@ import sys
 # --------------------------------------------------
 def get_args():
     """get args"""
-    parser = argparse.ArgumentParser(description='Number guessing game')
+    parser = argparse.ArgumentParser(description='Guessing game')
     parser.add_argument('-m', '--min', help='Minimum value',
                         metavar='int', type=int, default=1)
     parser.add_argument('-x', '--max', help='Maximum value',
@@ -24,6 +24,7 @@ def main():
     low = args.min
     high = args.max
     guesses_allowed = args.guesses
+    secret = random.randint(low, high)
 
     if low < 1:
         print('--min cannot be lower than 1')
@@ -37,12 +38,11 @@ def main():
         print('--min "{}" is higher than --max "{}"'.format(low, high))
         sys.exit(1)
 
-    secret = random.randint(low, high)
-    num_guesses = 0
     prompt = 'Guess a number between {} and {} (q to quit): '.format(low, high)
+    num_guesses = 0
 
     while True:
-        guess = input('[{}] {}'.format(num_guesses, prompt))
+        guess = input(prompt)
         num_guesses += 1
 
         if guess == 'q':
@@ -68,6 +68,7 @@ def main():
             print('Too low.')
         else:
             print('Too high.')
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
