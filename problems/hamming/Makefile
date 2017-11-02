@@ -1,5 +1,5 @@
 test:
-	./test.pl6
+	python3 -m pytest -v test.py
 
 run:
-	./hamming.pl6 GAGCCTACTAACGGGAT CATCGTAATGACGGCCT
+	./hamming.py GAGCCTACTAACGGGAT CATCGTAATGACGGCCT
