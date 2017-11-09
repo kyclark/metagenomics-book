@@ -22,7 +22,7 @@ for base in dna.lower():
 
 counts = []
 for base in "acgt":
-    num = count.get(base) or 0
+    num = count.get(base, 0)
     counts.append(str(num))
 
 print(' '.join(counts))
