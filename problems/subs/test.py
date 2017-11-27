@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """tests for subs.py"""
 
-from subprocess import getstatusoutput, getoutput
-import os.path
+from subprocess import getstatusoutput
+import os
 import re
 
 subs = './subs.py'
@@ -23,13 +23,10 @@ def test_usage():
 
 def test_run():
     """runs ok"""
-    for test in [('foobarfoo', 'foo', '1 7'),
-                 ('foobarfoo', 'blip', 'Not found'),
-                 ('GATATATGCATATACTT', 'ATAT', '2 4 10'),
-                 ('ACCGTCAGTACCGACCC', 'ACC', '1 10')]:
-
-        s1, s2, answer = test[0], test[1], test[2]
-        (retval, output) = getstatusoutput('{} {} {}'.format(subs, s1, s2))
+    for i in range(1,6):
+        test = 'input{}.txt'.format(i)
+        seq, sub, answer = open(test).read().splitlines()
+        (retval, output) = getstatusoutput('{} {} {}'.format(subs, seq, sub))
 
         assert retval == 0
-        assert output.rstrip() == answer
+        assert output.rstrip() == answer.rstrip()
