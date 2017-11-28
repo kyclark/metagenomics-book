@@ -1,40 +1,48 @@
 #!/usr/bin/env python3
+"""docstring"""
 
 import argparse
-import csv
 import os
 import sys
 
 # --------------------------------------------------
 def get_args():
-    parser = argparse.ArgumentParser(description='Parse Prodigal GFF')
-    parser.add_argument('gff', metavar='GFF', help='Prodigal GFF output')
-    parser.add_argument('-m', '--min', help='Minimum score',
-                        metavar='float', type=float, default=0.0)
+    """get args"""
+    parser = argparse.ArgumentParser(description='Prodigal GFF parser')
+    parser.add_argument('gff', metavar='file', help='Prodigal GFF file')
+    parser.add_argument('-m', '--min', help='Min score',
+                        metavar='float', type=float, default=0)
     return parser.parse_args()
 
 # --------------------------------------------------
 def main():
+    """main"""
     args = get_args()
     gff_file = args.gff
     min_score = args.min
+
+    if not os.path.isfile(gff_file):
+        print('GFF "{}" is not a file'.format(gff_file))
+        sys.exit(1)
+
     flds = 'seqname source feature start end score strand frame attribute'.split()
 
     for line in open(gff_file):
-        if line[0] == '#':
+        if line.startswith('#'):
             continue
 
-        row = dict(zip(flds, line.split('\t')))
+        vals = line.rstrip().split('\t')
+        rec = dict(zip(flds, vals))
         attrs = {}
-        if 'attribute' in row:
-            for fld in row['attribute'].split(';'):
-                if '=' in fld:
-                    name, val = fld.split('=')
-                    attrs[name] = val
 
-        if 'score' in attrs and float(attrs['score']) > min_score:
-            print(row)
-            break
+        for x in rec['attribute'].split(';'):
+            if '=' in x:
+                key, value = x.split('=')
+                attrs[key] = value
+
+        score = attrs.get('score')
+        if score is not None and float(score) >= min_score:
+            print('{} {}'.format(rec['seqname'], score))
 
 # --------------------------------------------------
 if __name__ == '__main__':
