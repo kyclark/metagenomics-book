@@ -98,19 +98,24 @@ def import_tsv(db, file, sample_id):
         reader = csv.DictReader(csvfile, delimiter='\t')
         for row in reader:
             tax_id = find_or_create_tax(db, row)
-            cur.execute(find_sql, (sample_id, tax_id))
-            res = cur.fetchone()
+            if tax_id:
+                cur.execute(find_sql, (sample_id, tax_id))
+                res = cur.fetchone()
+                num_reads = row.get('numReads', 0)
+                abundance = row.get('abundance', 0)
+                num_uniq = row.get('numUniqueReads', 0)
 
-            if res is None:
-                cur.execute(insert_sql,
-                            (sample_id, tax_id, row['numReads'],
-                             row['abundance'], row['numUniqueReads']))
+                if res is None:
+                    cur.execute(insert_sql,
+                                (sample_id, tax_id, num_reads, 
+                                 abundance, num_uniq))
+                else:
+                    s2t_id = res[0]
+                    cur.execute(update_sql,
+                                (sample_id, tax_id, num_reads,
+                                 abundance, num_uniq, s2t_id))
             else:
-                s2t_id = res[0]
-                cur.execute(update_sql,
-                            (sample_id, tax_id, row['numReads'],
-                             row['abundance'], row['numUniqueReads'],
-                             s2t_id))
+                print('No tax id!')
 
         db.commit()
 
@@ -126,21 +131,29 @@ def find_or_create_tax(db, rec):
     """
 
     cur = db.cursor()
-    ncbi_id = rec['taxID']
-    cur.execute(find_sql, (ncbi_id,))
-    res = cur.fetchone()
+    ncbi_id = rec.get('taxID', '')
+    if re.match('^\d+$', ncbi_id):
+        cur.execute(find_sql, (ncbi_id,))
+        res = cur.fetchone()
 
-    if res is None:
-        name = rec['name']
-        print('Loading "{}" ({})'.format(name, ncbi_id))
-        cur.execute(insert_sql,
-                    (name, ncbi_id, rec['taxRank'],
-                     rec['genomeSize']))
-        tax_id = cur.lastrowid
+        if res is None:
+            name = rec.get('name', '')
+            if name:
+                print('Loading "{}" ({})'.format(name, ncbi_id))
+                cur.execute(insert_sql,
+                            (name, ncbi_id, rec['taxRank'],
+                             rec['genomeSize']))
+                tax_id = cur.lastrowid
+            else:
+                print('No "name" in {}'.format(rec))
+                return None
+        else:
+            tax_id = res[0]
+
+        return tax_id
     else:
-        tax_id = res[0]
-
-    return tax_id
+        print('"{}" does not look like an NCBI tax id'.format(ncbi_id))
+        return None
 
 # --------------------------------------------------
 if __name__ == '__main__':
