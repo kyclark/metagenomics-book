@@ -42,6 +42,6 @@ def test_run():
             sys.exit(1)
 
         expected = open(outfile).read().rstrip()
-        (retval, output) = getstatusoutput('{} {}'.format(grph, input))
+        (retval, output) = getstatusoutput('{} {} | sort'.format(grph, input))
         assert retval == 0
         assert output.rstrip() == expected
