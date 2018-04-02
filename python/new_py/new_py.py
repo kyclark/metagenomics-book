@@ -35,8 +35,11 @@ import sys
 # --------------------------------------------------
 def get_args():
     \"\"\"get args\"\"\"
-    parser = argparse.ArgumentParser(description='Argparse Python script')
-    parser.add_argument('positional', metavar='str', help='A positional argument')
+    parser = argparse.ArgumentParser(
+        description='Argparse Python script',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('positional', metavar='str', 
+                        help='A positional argument')
     parser.add_argument('-a', '--arg', help='A named string argument',
                         metavar='str', type=str, default='')
     parser.add_argument('-i', '--int', help='A named integer argument',
@@ -66,6 +69,7 @@ if __name__ == '__main__':
 
 # --------------------------------------------------
 def main():
+    """main"""
     args = get_args()
     out_file = args.program
 
@@ -74,25 +78,27 @@ def main():
         sys.exit(1)
 
     out_file = re.sub(r'-', r'_', out_file)
-    if not re.search('\.py$', out_file):
+    if not re.search(r'\.py$', out_file):
         out_file = out_file + '.py'
 
     if os.path.isfile(out_file) and not args.overwrite:
-        yn = input('"{}" exists.  Overwrite? [yN] '.format(out_file))
-        if not re.match('^[yY]', yn):
+        answer = input('"{}" exists.  Overwrite? [yN] '.format(out_file))
+        if not re.match('^[yY]', answer):
             print('Will not overwrite. Bye!')
             sys.exit()
 
-    fh = open(out_file, 'w')
+    out_fh = open(out_file, 'w')
     text = ARGPARSE if args.use_argparse else SIMPLE
-    fh.write(text)
+    out_fh.write(text)
     subprocess.run(['chmod', '+x', out_file])
     print('Done, see new script "{}."'.format(out_file))
 
 # --------------------------------------------------
 def get_args():
     """get arguments"""
-    parser = argparse.ArgumentParser(description='Create Python script')
+    parser = argparse.ArgumentParser(
+        description='Create Python script',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('program', help='Program name', type=str)
     parser.add_argument('-a', '--argparse', help='Use argparse',
                         dest='use_argparse', action='store_true')
