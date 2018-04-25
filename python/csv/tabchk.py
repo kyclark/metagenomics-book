@@ -15,6 +15,9 @@ def get_args():
                         metavar='int', type=int, default=1)
     parser.add_argument('-d', '--dense', help='Not sparse (skip empty fields)',
                         action='store_true')
+    parser.add_argument('-n', '--number', 
+                        help='Show field number (e.g., for awk)',
+                        action='store_true')
     return parser.parse_args()
 
 # --------------------------------------------------
@@ -24,6 +27,7 @@ def main():
     limit = args.limit
     sep = args.sep
     dense = args.dense
+    show_numbers = args.number
 
     if not os.path.isfile(file):
         print('"{}" is not a file'.format(file))
@@ -38,8 +42,14 @@ def main():
             longest = max(map(len, flds))
             fmt = '{:' + str(longest + 1) + '}: {}'
             print('// ****** Record {} ****** //'.format(i+1))
+            n = 0
             for key, val in vals.items():
-                print(fmt.format(key, val))
+                n += 1
+                show = fmt.format(key, val)
+                if show_numbers:
+                    print('{:3} {}'.format(n, show))
+                else:
+                    print(show)
 
             if i + 1 == limit:
                 break
