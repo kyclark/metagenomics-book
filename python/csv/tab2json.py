@@ -63,8 +63,7 @@ def main():
 
 # --------------------------------------------------
 def normalize(hdr):
-    tmp = hdr.lower().replace(' ', '_')
-    return re.sub(r'[^A-Za-z0-9_]', '', tmp)
+    return re.sub(r'[^A-Za-z0-9_]', '', hdr.lower().replace(' ', '_'))
 
 # --------------------------------------------------
 if __name__ == '__main__':
