@@ -11,7 +11,7 @@ def main():
     """main"""
     args = sys.argv[1:]
 
-    if len(args) != 1:
+    if len(args) != 1 or args[0] == '-h':
         print('Usage: {} PROGRAM'.format(os.path.basename(sys.argv[0])))
         sys.exit(1)
 
@@ -25,8 +25,8 @@ def main():
         out_file = out_file + '.sh'
 
     if os.path.isfile(out_file):
-        yn = input('"{}" exists.  Overwrite? [yN] '.format(out_file))
-        if not re.match('^[yY]', yn):
+        answer = input('"{}" exists.  Overwrite? [yN] '.format(out_file))
+        if not re.match('^[yY]', answer):
             print('Will not overwrite. Bye!')
             sys.exit()
 
