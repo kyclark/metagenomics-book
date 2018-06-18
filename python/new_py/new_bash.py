@@ -47,7 +47,7 @@ set -u
 ARG1=""
 
 function USAGE() {
-    printf "Usage:\n  %s -a ARG\n\n" "$(basename "$0")"
+    printf "Usage:\\n  %s -a ARG\\n\\n" "$(basename "$0")"
 
     echo "Required arguments:"
     echo " -a ARG"
