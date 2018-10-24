@@ -2,7 +2,7 @@
 """
 Author : Ken Youens-Clark <kyclark@gmail.com>
 Date   : 2018-10-24
-Purpose: Rock the Casbah
+Purpose: Get NCBI lineage
 """
 
 import argparse
@@ -108,7 +108,10 @@ def main():
             term = match.group(1)
 
         print('{:4}: {}'.format(i + 1, term))
-        handle = Entrez.esearch(db=db_name, term=term, idtype="id")
+
+        # TODO: Handle searches by name (genus sp strain) and tax_id (int)
+        #handle = Entrez.esearch(db=db_name, term=term, idtype="id")
+        handle = Entrez.esearch(db=db_name, term=term)
         result = Entrez.read(handle)
         handle.close()
 
@@ -130,9 +133,13 @@ def main():
                 tax_id = org['taxonomy_id']
                 tax_fetch = Entrez.efetch(
                     db="taxonomy", id=tax_id, retmode="xml", rettype="full")
-                tax_xml = ET.fromstring(''.join(tax_fetch.readlines()))
-                lineage = tax_xml.findall('Taxon/Lineage')[0]
-                out_fh.write('\t'.join([term, lineage.text]))
+                tax_xml = ''.join(tax_fetch.readlines())
+                debug(tax_xml)
+                tax_info = ET.fromstring(tax_xml)
+                lineage = tax_info.findall('Taxon/Lineage')[0]
+                org_name = tax_info.findall('Taxon/ScientificName')[0].text
+                out_fh.write('\t'.join(
+                    ['{} ({})'.format(org_name, tax_id), lineage.text]) + '\n')
                 ok += 1
         else:
             warn('"{}" not found'.format(term))
