@@ -2,7 +2,7 @@
 """
 Author : Ken Youens-Clark <kyclark@gmail.com>
 Date   : 24 October 2018
-Purpose: Python script to write a Python script
+Purpose: Python program to write a Python program
 """
 
 import argparse
@@ -103,7 +103,7 @@ import sys
 
 # --------------------------------------------------
 def get_args():
-    \"\"\"get args\"\"\"
+    \"\"\"get command-line arguments\"\"\"
     parser = argparse.ArgumentParser(
         description='Argparse Python script',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -148,7 +148,7 @@ def die(msg='Something bad happened'):
 
 # --------------------------------------------------
 def main():
-    \"\"\"main\"\"\"
+    \"\"\"Make a jazz noise here\"\"\"
     args = get_args()
     str_arg = args.arg
     int_arg = args.int
