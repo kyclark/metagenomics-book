@@ -1,0 +1,4 @@
+Idea: Use the example of a paired-end read file that needs to be split.
+Show how to use `for x in range(0..list#)` to index into lists, then show
+`for x in list` syntax then use `i = 0; for x in list; i++...` to keep track 
+of index then use `enumerate` then show splitting.

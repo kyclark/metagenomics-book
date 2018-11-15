@@ -7,18 +7,35 @@ import sys
 from random import randint
 from Bio import SeqIO
 
+
 # --------------------------------------------------
 def get_args():
     """get args"""
     parser = argparse.ArgumentParser(description='Randomly subset FASTQ')
     parser.add_argument('fastq', metavar='FASTQ', help='FASTQ file')
-    parser.add_argument('-p', '--pct', help='Percent of reads (%(default)s)',
-                        metavar='int', type=int, default=50)
-    parser.add_argument('-f', '--format', help='Output format (%(default)s)',
-                        metavar='FORMAT', type=str, default='fastq')
-    parser.add_argument('-o', '--outfile', help='Output file',
-                        metavar='FILE', type=str, default='')
+    parser.add_argument(
+        '-p',
+        '--pct',
+        help='Percent of reads (%(default)s)',
+        metavar='int',
+        type=int,
+        default=50)
+    parser.add_argument(
+        '-f',
+        '--format',
+        help='Output format (%(default)s)',
+        metavar='FORMAT',
+        type=str,
+        default='fastq')
+    parser.add_argument(
+        '-o',
+        '--outfile',
+        help='Output file',
+        metavar='FILE',
+        type=str,
+        default='')
     return parser.parse_args()
+
 
 # --------------------------------------------------
 def main():
@@ -32,9 +49,8 @@ def main():
     max_num = 100
 
     if not min_num < pct < max_num:
-        print('--pct "{}" must be between {} and {}'.format(pct,
-                                                            min_num,
-                                                            max_num))
+        print('--pct "{}" must be between {} and {}'.format(
+            pct, min_num, max_num))
         sys.exit(1)
 
     ok_format = set(['fastq', 'fasta'])
@@ -58,10 +74,9 @@ def main():
                 num_taken += 1
                 SeqIO.write(rec, out_fh, out_format)
 
-    print('Wrote {} of {} ({:.02f}%) to "{}"'.format(num_taken,
-                                                     total_num,
-                                                     num_taken/total_num * 100,
-                                                     out_file))
+    print('Wrote {} of {} ({:.02f}%) to "{}"'.format(
+        num_taken, total_num, num_taken / total_num * 100, out_file))
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
