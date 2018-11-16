@@ -67,10 +67,10 @@ def main():
             delim = default_delim
             if not delim:
                 _, ext = os.path.splitext(file)
-                if ext == '.tab' or ext == '.tsv':
-                    delim = '\t'
-                else:
+                if ext == '.csv':
                     delim = ','
+                else:
+                    delim = '\t'
 
             reader = csv.DictReader(fh, delimiter=delim)
 
